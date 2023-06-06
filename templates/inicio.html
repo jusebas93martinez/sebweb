@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block estilos %}
+    <style>
+        /* Estilos adicionales específicos para el menú vertical */
+        .sidebar {
+            width: 200px;
+            background-color: #f2f2f2;
+            padding: 10px;
+            box-sizing: border-box;
+            float: left;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 5px;
+            background-color: #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover {
+            background-color: #aaa;
+            color: #fff;
+        }
+        .content {
+            margin-left: 30px; /* Para dejar espacio para el menú vertical */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+{% endblock %}
+
+{% block contenido %}
+    <div class="sidebar">
+      <h2>Aplicaciones</h2>
+        <ul>
+            <li><a href="/loadfile">Poligonal Cerrada</a></li>
+            <li><a href="#">Ondulacion Geoidal</a></li>
+            <li><a href="#">Aplicación 3</a></li>
+            <li><a href="#">Aplicación 4</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <!-- Contenido principal de la página -->
+        <h1>Bienvenido a mi página principal</h1>
+        <p>Este es el contenido de la página de inicio.</p>
+    </div>
+{% endblock %}

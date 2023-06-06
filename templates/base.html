@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Página Principal</title>
+    <style>
+        /* Estilos CSS para el menú */
+        .menu {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+        }
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .menu ul li {
+            margin-right: 10px;
+        }
+        .menu ul li a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ddd;
+            transition: background-color 0.3s ease;
+        }
+        .menu ul li a:hover {
+            background-color: #aaa;
+            color: #fff;
+        }
+        
+        /* Estilos CSS para el pie de página */
+        .content {
+            min-height: calc(100vh - 120px); /* Restar la altura del menú y el pie de página */
+            padding-bottom: 50px; /* Altura del pie de página */
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+    {% block estilos %}{% endblock %}
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li><a href="/inicio">Inicio</a></li>
+            <li><a href="/acerca-de">Acerca de</a></li>
+            <li><a href="/contacto">Contacto</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        {% block contenido %}{% endblock %}
+    </div>
+
+    <div class="footer">
+        &copy; {{ year }} Mi Página Principal. Todos los derechos reservados.
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

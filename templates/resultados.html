@@ -1,0 +1,225 @@
+
+{% extends 'base.html' %}
+
+{% block estilos %}
+    <style>
+        /* Estilos adicionales específicos para la página de inicio */
+        h1 {
+            color: blue;
+        }
+    </style>
+{% endblock %}
+
+{% block contenido %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados</title>
+        <style>
+        .tabla-resultados {
+            max-width: 800px; /* Ajusta el valor según tus necesidades */
+            margin: 0 auto; /* Centra la tabla en la página */
+            table-layout: auto; /* Ajusta el tamaño de las columnas automáticamente */
+        }
+        .tabla-resultados th,
+        .tabla-resultados td {
+            text-align: center; /* Centra el contenido de las celdas */
+        }
+        .tabla-resultados1 {
+            max-width: 600px; /* Ajusta el valor según tus necesidades */
+            margin: 0 auto; /* Centra la tabla en la página */
+            table-layout: auto; /* Ajusta el tamaño de las columnas automáticamente */
+        }
+        .tabla-resultados1 th,
+        .tabla-resultados1 td {
+            text-align: center; /* Centra el contenido de las celdas */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 14px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        p {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        tr:hover {
+            background-color: #eaeaea;
+        }
+        .center-image {
+        display: flex;
+        justify-content: center;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Resultados</h1>
+
+    <p><strong>Precision:</strong> 1:{{ precision|floatformat:0}}</p>
+    <p><strong>Tipos de Angulos:</strong> {{ tipo_angulos }}</p>
+    <p><strong>Suma teorica:</strong> {{ suma_teorica }}</p>
+    <p><strong>Suma Angular:</strong> {{ suma_angular }}</p>
+    <p><strong>Error Cierre Angular:</strong> {{ error_cierre }}</p>
+    <p><strong>Número de Vertices:</strong> {{ num_vertices }}</p>
+    <p><strong>Distancia Poligonal:</strong> {{ dist_pol }} metros</p>
+    <p><strong>Error Proyecciones Norte:</strong> {{ error_norte|floatformat:3 }} metros</p>
+    <p><strong>Error Proyecciones Este:</strong> {{ error_este|floatformat:3 }} metros</p>
+
+    <h2>Coordenadas de Arranque</h2>
+
+    <table class="tabla-resultados1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Norte</th>
+                <th>Este</th>
+                <th>Cota</th>
+
+
+                <!-- Agrega más columnas si es necesario -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for arranque in arranque %}
+            <tr>
+                <td>{{ arranque.id }}</td>
+                <td>{{ arranque.norte }}</td>
+                <td>{{ arranque.este }}</td>
+                <td>{{ arranque.altura }}</td>
+
+
+                <!-- Muestra más columnas si es necesario -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Datos de entrada</h2>
+
+    <table class="tabla-resultados">
+        <thead>
+            <tr>
+                <th>Armada</th>
+                <th>Visado</th>
+                <th>Altura Instrumental</th>
+                <th>Altura Prisma</th>
+                <th>Angulo Horizontal</th>
+                <th>Angulo Vertical</th>
+                <th>Distancia Horizontal</th>
+                <th>Distancia Inclinada</th>
+
+                <!-- Agrega más columnas si es necesario -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for resultado in resultados %}
+            <tr>
+                <td>{{ resultado.id }}</td>
+                <td>{{ resultado.visado }}</td>
+                <td>{{ resultado.alt_isn }}</td>
+                <td>{{ resultado.baston }}</td>
+                <td>{{ resultado.angulos_horizontales_iniciales }}</td>
+                <td>{{ resultado.angulos_vertical_iniciales }}</td>
+                <td>{{ resultado.dis_h|floatformat:4 }}</td>
+                <td>{{ resultado.Dis_inc|floatformat:4 }}</td>
+
+                <!-- Muestra más columnas si es necesario -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>Resultados de la Poligonal</h2>
+        <table class="tabla-resultados">
+        <thead>
+            <tr>
+                <th>Angulos Horizontal Corregidos</th>
+                <th>Azimuts</th>
+                <th>Proyección Norte</th>
+                <th>Proyección Este</th>
+                <th>Proyección Cota</th>
+
+                <!-- Agrega más columnas si es necesario -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for resultado in resultados %}
+            <tr>
+                <td>{{ resultado.anguloh_corr }}</td>
+                <td>{{ resultado.az }}</td>
+                <td>{{ resultado.ProN|floatformat:3 }}</td>
+                <td>{{ resultado.ProE|floatformat:3 }}</td>
+                <td>{{ resultado.correcionH|floatformat:3 }}</td>
+
+                <!-- Muestra más columnas si es necesario -->
+            </tr>
+            {% endfor %}
+        </tbody>
+
+        </table>
+    <h2>Coordenadas Ajustadas</h2>
+        <table class="tabla-resultados1">
+        <thead>
+            <tr>
+                <th>Punto</th>
+                <th>Norte</th>
+                <th>Este</th>
+                <th>Cota</th>
+                
+                <!-- Agrega más columnas si es necesario -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for resultado in resultados %}
+            <tr>
+                <td>{{ resultado.visado }}</td>
+                <td>{{ resultado.Norte|floatformat:4 }}</td>
+                <td>{{ resultado.Este|floatformat:4 }}</td>
+                <td>{{ resultado.Cota|floatformat:4 }}</td>
+
+                <!-- Muestra más columnas si es necesario -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+     <h2>Gráfica de Coordenadas</h2>
+    <div id="grafica-container" class="center-image">
+    <img src="/media/temporal.png" alt="Imagen generada">
+    </div>
+</body>
+</html>
+
+{% endblock %}

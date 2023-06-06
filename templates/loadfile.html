@@ -1,0 +1,60 @@
+
+{% extends 'base.html' %}
+
+{% block estilos %}
+    <style>
+        /* Estilos adicionales específicos para la página de inicio */
+        h1 {
+            color: blue;
+        }
+    </style>
+{% endblock %}
+
+{% block contenido %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poligonal</title>
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cargar Archivos CSV</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="pol_file">Archivo Poligonal:</label>
+        <input type="file" name="pol_file" id="pol_file"><br><br>
+        
+        <label for="bases_file">Archivo bases:</label>
+        <input type="file" name="bases_file" id="bases_file"><br><br>
+        
+        <input type="submit" value="Cargar Archivos">
+    </form>
+
+</body>
+</html>
+
+{% endblock %}
