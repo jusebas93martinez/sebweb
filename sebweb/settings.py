@@ -94,7 +94,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sebweb.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
