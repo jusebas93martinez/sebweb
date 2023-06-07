@@ -8,7 +8,7 @@ Django @ file:///work/ci_py311/django_1676851927387/work
 django-environ==0.10.0
 django-extensions==3.2.1
 fonttools==4.25.0
-gunicorn @ file:///work/ci_py311/gunicorn_1676830781869/work
+gunicorn==20.1.0
 kiwisolver @ file:///work/ci_py311/kiwisolver_1676827230232/work
 matplotlib @ file:///croot/matplotlib-suite_1679593461707/work
 mkl-fft==1.3.6
