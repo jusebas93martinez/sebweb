@@ -1,37 +1,37 @@
-asgiref==3.4.1
-Bottleneck==1.3.2
-click==8.0.1
-contourpy==0.5.2
-cycler==0.11.0
+asgiref @ file:///work/ci_py311/asgiref_1676843199969/work
+Bottleneck @ file:///work/ci_py311/bottleneck_1676827011612/work
+click @ file:///work/ci_py311/click_1676825163161/work
+contourpy @ file:///work/ci_py311/contourpy_1676827066340/work
+cycler @ file:///tmp/build/80754af9/cycler_1637851556182/work
 dj-database-url==2.0.0
-Django==3.2.4
+Django @ file:///work/ci_py311/django_1676851927387/work
 django-environ==0.10.0
 django-extensions==3.2.1
 fonttools==4.25.0
-gunicorn==20.1.0
-kiwisolver==1.3.1
-matplotlib==3.4.3
-mkl-fft==1.3.0
-mkl-random==1.2.2
+gunicorn @ file:///work/ci_py311/gunicorn_1676830781869/work
+kiwisolver @ file:///work/ci_py311/kiwisolver_1676827230232/work
+matplotlib @ file:///croot/matplotlib-suite_1679593461707/work
+mkl-fft==1.3.6
+mkl-random @ file:///work/mkl/mkl_random_1682950433854/work
 mkl-service==2.4.0
 munkres==1.1.4
-numexpr==2.7.3
-numpy==1.21.0
-packaging==21.0
-pandas==1.3.0
-Pillow==8.2.0
+numexpr @ file:///croot/numexpr_1683221822650/work
+numpy @ file:///work/mkl/numpy_and_numpy_base_1682953417311/work
+packaging @ file:///croot/packaging_1678965309396/work
+pandas==1.5.3
+Pillow==9.4.0
 ply==3.11
-psycopg2==2.9.1
-psycopg2-binary==2.9.1
-pyparsing==2.4.7
-PyQt5-sip==12.9.0
-python-dateutil==2.8.2
-python-dotenv==0.19.1
-pytz==2021.1
-sip==4.19.13
-six==1.16.0
-sqlparse==0.4.1
-toml==0.10.2
-tornado==6.1
-typing-extensions==3.10.0.0
+psycopg2 @ file:///work/ci_py311/psycopg2_1676845216091/work
+psycopg2-binary==2.9.6
+pyparsing @ file:///work/ci_py311/pyparsing_1677811559502/work
+PyQt5-sip==12.11.0
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+python-dotenv @ file:///work/ci_py311/python-dotenv_1676842320650/work
+pytz @ file:///work/ci_py311/pytz_1676825004346/work
+sip @ file:///work/ci_py311/sip_1676825117084/work
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+sqlparse @ file:///work/ci_py311/sqlparse_1676828845822/work
+toml @ file:///tmp/build/80754af9/toml_1616166611790/work
+tornado @ file:///work/ci_py311/tornado_1676823418767/work
+typing_extensions==4.6.3
 
