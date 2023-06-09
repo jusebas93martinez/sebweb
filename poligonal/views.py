@@ -93,6 +93,8 @@ def procesar_archivos_view(request):
 
         random_value = random.randint(1, 100000)  # Generar un valor aleatorio
         datos['random_value'] = random_value
-        datos['img_path'] = f'{img_path}?{random_value}'
+        img_filename = os.path.basename(img_path)
+        img_dirname = os.path.dirname(img_path)
+        datos['img_path'] = f'{img_dirname}/{img_filename}?{random_value}'
 
         return render(request, 'resultados.html', datos)
