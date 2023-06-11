@@ -27,9 +27,11 @@ handler404 = error_404
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('loadfile/', views.cargar_archivos, name='cargar'),
-    path('procesar/', views.procesar_archivos_view, name='procesar_archivos'),
+    path('procesar/', views.procesar_pol, name='procesar_archivos'),
+    path('grafica1/', views.procesar_archivos_view, name='procesar_archivos_view'),
     path('base/', views.index, name='index'),
     path('inicio/', views.inicio, name='inicio'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
