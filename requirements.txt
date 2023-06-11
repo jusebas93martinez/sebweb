@@ -10,7 +10,7 @@ django-extensions==3.2.1
 fonttools==4.25.0
 gunicorn==20.1.0
 kiwisolver==1.4.4
-matplotlib==3.4.3
+matplotlib==3.5.1
 munkres==1.1.4
 numexpr==2.8.4
 numpy==1.24.3
