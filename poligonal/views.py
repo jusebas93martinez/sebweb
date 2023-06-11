@@ -51,8 +51,6 @@ def cargar_archivos(request):
 
 def procesar_archivos_view(request):
     if request.method == 'GET':
-        pol_file = request.GET.get('pol_file')
-        bases_file = request.GET.get('bases_file')
 
         datos = procesar_archivos()
 
@@ -78,23 +76,20 @@ def procesar_archivos_view(request):
         ax.xaxis.get_major_formatter().set_useOffset(False)
 
 
-
         # Agregar etiquetas a los puntos
         for x, y, label in zip(este_values, norte_values, visados_values):
             ax.text(x, y, label, fontsize=8, ha='center', va='bottom')
 
-        # Guardar el gráfico en un archivo temporal
-        img_path = 'media/temporal.png'
+        img_path = os.path.join(settings.MEDIA_ROOT, 'temporal.png')
         plt.savefig(img_path)
         plt.close()
 
-        # Agregar la ruta de la imagen al diccionario de datos
-        datos['img_path'] = img_path
+        # Genera un valor aleatorio para evitar la caché de la imagen
+        random_value = random.randint(1, 100000)
 
-        random_value = random.randint(1, 100000)  # Generar un valor aleatorio
-        datos['random_value'] = random_value
-        img_filename = os.path.basename(img_path)
-        img_dirname = os.path.dirname(img_path)
-        datos['img_path'] = f'{img_dirname}/{img_filename}?{random_value}'
+        # Construye la URL de la imagen con el valor aleatorio
+        img_url = f"{settings.MEDIA_URL}temporal.png?{random_value}"
 
-        return render(request, 'resultados.html', datos)
+        datos['img_url'] = img_url
+
+        return render(request, 'resultados.html',datos)
