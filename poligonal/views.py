@@ -83,6 +83,11 @@ def procesar_archivos_view(request):
         img_path = os.path.join(settings.MEDIA_ROOT, 'temporal.png')
         plt.savefig(img_path, format='png')
         plt.close()
+        
+        if os.path.exists(img_path):
+          print("La imagen se ha creado correctamente.")
+        else:
+          print("Error al crear la imagen.")
 
         # Genera un valor aleatorio para evitar la caché de la imagen
         random_value = random.randint(1, 100000)
