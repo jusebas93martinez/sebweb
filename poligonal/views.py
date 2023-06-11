@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 import matplotlib
 matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import matplotlib.ticker as ticker
@@ -20,8 +21,8 @@ import matplotlib.ticker as ticker
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from .utils import procesar_archivos
 
-def error_404(request, exception):
-    return render(request, '404.html', status=404)
+'''def error_404(request, exception):
+    return render(request, '404.html', status=404)'''
 
 def index(request):
     return render(request, 'base.html')
@@ -49,45 +50,54 @@ def cargar_archivos(request):
 
     return render(request, 'loadfile.html')
 
+def procesar_pol(request):
+    if request.method == 'GET':
+        datos = procesar_archivos()
+        return render(request, 'resultados.html',datos)
+
+
+def generar_grafico(datos):
+    fig, ax = plt.subplots(figsize=(8, 6))
+    este_values = [resultado['Este'] for resultado in datos['resultados']]
+    norte_values = [resultado['Norte'] for resultado in datos['resultados']]
+    visados_values = [resultado['visado'] for resultado in datos['resultados']]
+    ax.plot(este_values + [este_values[0]], norte_values + [norte_values[0]], marker='o')
+
+    ax.set_xlabel('Este')
+    ax.set_ylabel('Norte')
+    ax.set_title('Poligonal')
+    ax.grid(True)
+
+    ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
+    ax.yaxis.get_major_formatter().set_scientific(False)
+    ax.yaxis.get_major_formatter().set_useOffset(False)
+
+    ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
+    ax.xaxis.get_major_formatter().set_scientific(False)
+    ax.xaxis.get_major_formatter().set_useOffset(False)
+
+    # Agregar etiquetas a los puntos
+    for x, y, label in zip(este_values, norte_values, visados_values):
+        ax.text(x, y, label, fontsize=8, ha='center', va='bottom')
+
+    return fig
+
+def guardar_grafico(fig):
+    img_path = os.path.join(settings.MEDIA_ROOT, 'temporal.png')
+    fig.savefig(img_path, format='png')
+    plt.close(fig)
+    return img_path
+
 def procesar_archivos_view(request):
     if request.method == 'GET':
-
         datos = procesar_archivos()
+        fig = generar_grafico(datos)
+        img_path = guardar_grafico(fig)
 
-        # Generar el gráfico con Matplotlib
-        fig, ax = plt.subplots(figsize=(8, 6))
-        este_values = [resultado['Este'] for resultado in datos['resultados']]
-        norte_values = [resultado['Norte'] for resultado in datos['resultados']]
-        visados_values = [resultado['visado'] for resultado in datos['resultados']]
-        ax.plot(este_values + [este_values[0]], norte_values + [norte_values[0]], marker='o')
-
-
-        ax.set_xlabel('Este')
-        ax.set_ylabel('Norte')
-        ax.set_title('Poligonal')
-        ax.grid(True)
-
-        ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
-        ax.yaxis.get_major_formatter().set_scientific(False)
-        ax.yaxis.get_major_formatter().set_useOffset(False)
-        
-        ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
-        ax.xaxis.get_major_formatter().set_scientific(False)
-        ax.xaxis.get_major_formatter().set_useOffset(False)
-
-
-        # Agregar etiquetas a los puntos
-        for x, y, label in zip(este_values, norte_values, visados_values):
-            ax.text(x, y, label, fontsize=8, ha='center', va='bottom')
-
-        img_path = os.path.join(settings.MEDIA_ROOT, 'temporal.png')
-        plt.savefig(img_path, format='png')
-        plt.close()
-        
         if os.path.exists(img_path):
-          print("La imagen se ha creado correctamente.")
+            print("La imagen se ha creado correctamente.")
         else:
-          print("Error al crear la imagen.")
+            print("Error al crear la imagen.")
 
         # Genera un valor aleatorio para evitar la caché de la imagen
         random_value = random.randint(1, 100000)
@@ -97,4 +107,6 @@ def procesar_archivos_view(request):
 
         datos['img_url'] = img_url
 
-        return render(request, 'resultados.html',datos)
+        return render(request, 'grafico1.html', datos)
+
+
