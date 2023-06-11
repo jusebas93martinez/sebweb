@@ -81,7 +81,7 @@ def procesar_archivos_view(request):
             ax.text(x, y, label, fontsize=8, ha='center', va='bottom')
 
         img_path = os.path.join(settings.MEDIA_ROOT, 'temporal.png')
-        plt.savefig(img_path)
+        plt.savefig(img_path, format='png')
         plt.close()
 
         # Genera un valor aleatorio para evitar la caché de la imagen
