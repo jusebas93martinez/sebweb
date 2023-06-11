@@ -30,7 +30,7 @@ urlpatterns = [
     path('procesar/', views.procesar_pol, name='procesar_archivos'),
     path('grafica1/', views.procesar_archivos_view, name='procesar_archivos_view'),
     path('base/', views.index, name='index'),
-    path('inicio/', views.inicio, name='inicio'),
+    path('', views.inicio, name='inicio'),
 
 ]
 
