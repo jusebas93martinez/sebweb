@@ -18,7 +18,7 @@ from django.urls import path
 from poligonal import views
 from django.conf import settings
 from django.conf.urls.static import static
-from poligonal.views import error_404
+#from poligonal.views import error_404
 
 #handler404 = error_404
 '''handler404 = 'poligonal.views.error_404'''
