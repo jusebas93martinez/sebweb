@@ -12,6 +12,7 @@ import pandas as pd
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 import matplotlib
+from .poligonal2 import pol_cerrada2
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
@@ -30,7 +31,13 @@ def index(request):
 def inicio(request):
     return render(request, 'inicio.html')
 
-def cargar_archivos(request):
+def acercade(request):
+    return render(request, 'acercade.html')
+
+def contacto(request):
+    return render(request, 'contacto.html')
+
+def cargar_archivos_pol_cerrada(request):
     if request.method == 'POST':
         pol_file = request.FILES['pol_file']
         bases_file = request.FILES['bases_file']
@@ -45,23 +52,71 @@ def cargar_archivos(request):
                 destination.write(chunk)
 
         # Redirigir a la vista de procesamiento de archivos
-        return HttpResponseRedirect(reverse('procesar_archivos') + f'?pol_file={pol_file.name}&bases_file={bases_file.name}')
-
-
+        return HttpResponseRedirect(reverse('procesar_pol_cerrada') + f'?pol_file={pol_file.name}&bases_file={bases_file.name}')
+    
     return render(request, 'loadfile.html')
+    
+def cargar_archivos_pol_cerrada_doble(request):
+    if request.method == 'POST':
+        pol_file = request.FILES['pol_file']
+        bases_file = request.FILES['bases_file']
+
+        # Guardar los archivos en las rutas especificadas
+        with open('media/pol.csv', 'wb') as destination:
+            for chunk in pol_file.chunks():
+                destination.write(chunk)
+        
+        with open('media/bases.csv', 'wb') as destination:
+            for chunk in bases_file.chunks():
+                destination.write(chunk)
+
+        # Redirigir a la vista de procesamiento de archivos
+        return HttpResponseRedirect(reverse('procesar_poligonal_doble') + f'?pol_file={pol_file.name}&bases_file={bases_file.name}')
+
+    return render(request, 'loadfile_poldoble.html')
 
 def procesar_pol(request):
     if request.method == 'GET':
         datos = procesar_archivos()
-        return render(request, 'resultados.html',datos)
+        return render(request, 'pol_cerrada.html',datos)
+    
+def procesar_pol_doble(request):
+    if request.method == 'GET':
+        datos = pol_cerrada2()
+        return render(request, 'pol_doble_a.html',datos)
 
-
-def generar_grafico(datos):
+def generar_grafico1(datos):
     fig, ax = plt.subplots(figsize=(8, 6))
-    este_values = [resultado['Este'] for resultado in datos['resultados']]
-    norte_values = [resultado['Norte'] for resultado in datos['resultados']]
+    este_values = [resultado['este'] for resultado in datos['resultados']]
+    norte_values = [resultado['norte'] for resultado in datos['resultados']]
     visados_values = [resultado['visado'] for resultado in datos['resultados']]
     ax.plot(este_values + [este_values[0]], norte_values + [norte_values[0]], marker='o')
+
+    ax.set_xlabel('Este')
+    ax.set_ylabel('Norte')
+    ax.set_title('Poligonal')
+    ax.grid(True)
+
+    ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
+    ax.yaxis.get_major_formatter().set_scientific(False)
+    ax.yaxis.get_major_formatter().set_useOffset(False)
+
+    ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
+    ax.xaxis.get_major_formatter().set_scientific(False)
+    ax.xaxis.get_major_formatter().set_useOffset(False)
+
+    # Agregar etiquetas a los puntos
+    for x, y, label in zip(este_values, norte_values, visados_values):
+        ax.text(x, y, label, fontsize=8, ha='center', va='bottom')
+
+    return fig
+
+def generar_grafico2(datos):
+    fig, ax = plt.subplots(figsize=(8, 6))
+    este_values = [resultado['este'] for resultado in datos['resultados']]
+    norte_values = [resultado['norte'] for resultado in datos['resultados']]
+    visados_values = [resultado['visado'] for resultado in datos['resultados']]
+    ax.plot(este_values, norte_values, marker='o')
 
     ax.set_xlabel('Este')
     ax.set_ylabel('Norte')
@@ -88,10 +143,10 @@ def guardar_grafico(fig):
     plt.close(fig)
     return img_path
 
-def procesar_archivos_view(request):
+def procesar_archivos_pol_cerrada(request):
     if request.method == 'GET':
         datos = procesar_archivos()
-        fig = generar_grafico(datos)
+        fig = generar_grafico1(datos)
         img_path = guardar_grafico(fig)
 
         if os.path.exists(img_path):
@@ -109,4 +164,24 @@ def procesar_archivos_view(request):
 
         return render(request, 'grafico1.html', datos)
 
+def procesar_archivos_pol_cerrada_doble(request):
+    if request.method == 'GET':
+        datos = pol_cerrada2()
+        fig = generar_grafico2(datos)
+        img_path = guardar_grafico(fig)
+
+        if os.path.exists(img_path):
+            print("La imagen se ha creado correctamente.")
+        else:
+            print("Error al crear la imagen.")
+
+        # Genera un valor aleatorio para evitar la caché de la imagen
+        random_value = random.randint(1, 100000)
+
+        # Construye la URL de la imagen con el valor aleatorio
+        img_url = f"{settings.MEDIA_URL}temporal.png?{random_value}"
+
+        datos['img_url'] = img_url
+
+        return render(request, 'grafico2.html', datos)
 
