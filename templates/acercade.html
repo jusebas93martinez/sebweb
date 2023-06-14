@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% block estilos %}
+<style>
+  /* Estilos adicionales específicos para la página de inicio */
+  h1 {
+    color: blue;
+  }
+  .center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Opcional: Si deseas centrar verticalmente también */
+  }
+</style>
+{% endblock %}{% block contenido %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Acerca de</title>
+
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: justify;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .description p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Acerca de</h1>
+      <div class="description">
+        <p>
+          Soy un ingeniero topográfico y piloto profesional de drones colombiano
+          con un sólido background en topografía y geodesia.
+        </p>
+        <p>
+          Mi experiencia en estas disciplinas me ha brindado un amplio
+          conocimiento en la recolección, procesamiento y análisis de datos
+          espaciales para la generación de mapas, modelos digitales del terreno
+          y otros productos geoespaciales.
+        </p>
+        <p>
+          Esta aplicación web que has encontrado me brinda la oportunidad de
+          poner en práctica los conocimientos adquiridos en programación y
+          expandir mis habilidades en el desarrollo de aplicaciones
+          geoespaciales.
+        </p>
+        <p>
+          Estoy entusiasmado por seguir aprendiendo y creciendo en el campo de
+          la geoinformática, y estoy abierto a nuevas oportunidades de
+          colaboración en proyectos relacionados con la topografía, análisis de
+          datos espaciales y desarrollo de aplicaciones geoespaciales.
+        </p>
+        <p>
+          Si está interesado en trabajar juntos en un proyecto geoespacial o
+          tienes alguna consulta, no dudes en contactarme. Estoy emocionado por
+          seguir explorando el potencial de la geoinformática y contribuir al
+          desarrollo de soluciones impactantes en nuestro campo.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+{% endblock %}

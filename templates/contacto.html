@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% block estilos %}
+<style>
+  /* Estilos adicionales específicos para la página de inicio */
+  h1 {
+    color: blue;
+  }
+  .center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Opcional: Si deseas centrar verticalmente también */
+  }
+</style>
+{% endblock %}{% block contenido %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contacto</title>
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .contact-info p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+
+      .contact-info a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Información de contacto</h1>
+      <div class="contact-info">
+        <p>
+          <strong>LinkedIn:</strong>
+          <a
+            href="https://www.linkedin.com/in/juan-sebastian-martinez-riveros-ab0366126/"
+            target="_blank"
+            >Mi perfil en LinkedIn</a
+          >
+        </p>
+        <p>
+          <strong>Youtube:</strong>
+          <a
+            href="https://www.youtube.com/channel/UCcY764p6IfrAr5zbrPL3Bwg"
+            target="_blank"
+            >Canal de Youtube</a
+          >
+        </p>
+        <p>
+          <strong>Correo electrónico:</strong>
+          <a href="mailto:tu_correo@ejemplo.com">sebas93martinez@gmail.com </a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+{% endblock %}
