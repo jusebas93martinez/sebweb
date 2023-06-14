@@ -18,20 +18,25 @@ from django.urls import path
 from poligonal import views
 from django.conf import settings
 from django.conf.urls.static import static
-#from poligonal.views import error_404
 
-#handler404 = error_404
+
+'''handler404 = error_404'''
 '''handler404 = 'poligonal.views.error_404'''
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('loadfile/', views.cargar_archivos, name='cargar'),
-    path('procesar/', views.procesar_pol, name='procesar_archivos'),
-    path('grafica1/', views.procesar_archivos_view, name='procesar_archivos_view'),
+    path('loadfile/', views.cargar_archivos_pol_cerrada, name='cargar_archivos_pol_cerrada'),
+    path('loadfile_poldoble/', views.cargar_archivos_pol_cerrada_doble, name='cargar_pol'),
+    path('pol_cerrada/', views.procesar_pol, name='procesar_pol_cerrada'),
+    path('pol_cerrada_doble/', views.procesar_pol_doble, name='procesar_poligonal_doble'),
+    path('grafica1/', views.procesar_archivos_pol_cerrada, name='grafica1'),
+    path('grafica2/', views.procesar_archivos_pol_cerrada_doble,name='grafica2'),
     path('base/', views.index, name='index'),
+    path('acercade/', views.acercade, name='acercade'),
+    path('contacto/', views.contacto, name='contacto'),
     path('', views.inicio, name='inicio'),
 
-]
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
