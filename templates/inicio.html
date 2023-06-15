@@ -1,93 +1,80 @@
-{% extends 'base.html' %} 
-
-{% block contenido %}
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>BASE</title>
+{% extends 'base.html' %} {% block estilos %}
 <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #333333;
-      margin: 0;
-      padding: 0;
-    }
+  .container {
+    max-width: 900px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centrar horizontalmente */
+    display: flex;
+  }
 
-    .container {
-      max-width: 1200px; /* Ancho máximo del contenedor */
-      margin: 0 auto; /* Centrar horizontalmente */
-    }
+  .sidebar {
+    width: 250px;
+    background-color: #f2f2f2;
+    padding: 5px;
+  }
 
-    .sidebar {
-      width: 250px;
-      background-color: #f2f2f2;
-      padding: 10px;
-      box-sizing: border-box;
+  .sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
 
-    }
+  .sidebar ul li {
+    margin-bottom: 5px;
+  }
 
-    .sidebar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      float: left;
-    }
+  .sidebar ul li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+    text-align: left;
+    background-color: #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
 
-    .sidebar ul li {
-      margin-bottom: 10px;
-    }
+  .sidebar ul li a:hover {
+    background-color: #001f3f;
+    color: #fff;
+  }
 
-    .sidebar ul li a {
-      color: #333;
-      text-decoration: none;
-      display: block;
-      padding: 5px;
-      text-align: left; 
-      background-color: #ddd;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .sidebar ul li a:hover {
-      background-color: #aaa;
-      color: #fff;
-    }
+  h1 {
+    font-size: 26px;
+    color: #333333;
+    text-align: center;
+    background: linear-gradient(45deg, #002240, #004c80);
+    padding: 10px;
+    border-radius: 15px;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-    .content {
+  p {
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: justify;
+  }
+</style>
 
-      margin-left: 200px; /* Para dejar espacio para el menú vertical */
-      margin-right: 120px;
-      padding: 10px;
-      box-sizing: border-box;
-      text-align: justify;
-    }
+{% endblock %} {% block contenido %}
 
-    h1 {
-      font-size: 26px;
-      color: #333333;
-      text-align: center;
-      background: linear-gradient(45deg, #002240, #004c80);
-      padding: 10px;
-      border-radius: 10px;
-      color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  
-    p {
-      font-size: 16px;
-      line-height: 1.5;
-      text-align: justify;
-    }
-  </style>
-</head>
-<body>
+<div class="container">
   <div class="sidebar">
     <h2>Aplicaciones</h2>
     <ul>
       <li><a href="/loadfile">Poligonal Cerrada brazo interno</a></li>
-      <li><a href="/loadfile_poldoble">Poligonal Cerrada Doble punto de apoyo</a></li>
+      <li>
+        <a href="/loadfile_poldoble">Poligonal Cerrada Doble punto de apoyo</a>
+      </li>
       <li><a href="#">Poligonal Cerrada brazo externo</a></li>
       <li><a href="#">Tiempo de posicionamiento GPS</a></li>
       <li><a href="#">Nivelación Geometrica</a></li>
@@ -95,42 +82,44 @@
       <li><a href="#">Calcular Distancia entre puntos</a></li>
     </ul>
   </div>
-<div class="content">
-  <!-- Contenido principal de la página -->
-  <h1>TOPTOP</h1>
-  <p>
-    Bienvenido a nuestra página web dedicada a la geodesia y topografía. Somos
-    una plataforma en línea que ofrece una amplia gama de aplicaciones y
-    herramientas especializadas en estas áreas, diseñadas para ayudar a
-    profesionales y entusiastas a realizar mediciones precisas, análisis
-    detallados y generar informes profesionales. Nuestra página cuenta con una
-    interfaz intuitiva y fácil de usar, que permite a los usuarios acceder
-    rápidamente a las diversas aplicaciones disponibles. Estas aplicaciones
-    abarcan diferentes aspectos de la geodesia y topografía, como el cálculo de
-    coordenadas, la determinación de distancias y ángulos, la nivelación de
-    terrenos, entre muchas otras.
-  </p>
-  <p>
-    Una de las características destacadas de nuestra página es la posibilidad de
-    cargar datos en diferentes formatos, como archivos de texto, CSV, Esto
-    brinda una gran flexibilidad a los usuarios a la hora de trabajar con sus
-    propios datos y les permite aprovechar al máximo nuestras aplicaciones.
-    Además, nuestras herramientas están respaldadas por algoritmos avanzados y
-    métodos geodésicos de vanguardia, lo que garantiza resultados precisos y
-    confiables en cada cálculo realizado. Estamos comprometidos con la calidad y
-    la precisión, y nos esforzamos por mantenernos actualizados con las últimas
-    tendencias y avances en geodesia y topografía. Nuestro objetivo es
-    proporcionar una solución integral para las necesidades de los profesionales
-    de la geodesia y topografía, así como para estudiantes y entusiastas que
-    buscan aprender y aplicar estos conocimientos en sus proyectos. Ya sea que
-    necesites realizar mediciones topográficas para un proyecto de construcción,
-    trazar líneas de límites precisas o realizar cálculos geodésicos complejos,
-    nuestra página ofrece las herramientas adecuadas para ayudarte a lograr tus
-    objetivos. Explora nuestra página y descubre la amplia gama de aplicaciones
-    disponibles. Ya seas un experto en geodesia o un principiante en el campo,
-    estamos aquí para respaldarte en tus esfuerzos y brindarte las herramientas
-    necesarias para tener éxito en tus proyectos de geodesia y topografía.
-  </p>
+  <div class="content">
+    <!-- Contenido principal de la página -->
+    <h1>TOPTOP</h1>
+
+    <p>
+      Bienvenido a nuestra página web dedicada a la geodesia y topografía. Somos
+      una plataforma en línea que ofrece una amplia gama de aplicaciones y
+      herramientas especializadas en estas áreas, diseñadas para ayudar a
+      profesionales y entusiastas a realizar mediciones precisas, análisis
+      detallados y generar informes profesionales. Nuestra página cuenta con una
+      interfaz intuitiva y fácil de usar, que permite a los usuarios acceder
+      rápidamente a las diversas aplicaciones disponibles. Estas aplicaciones
+      abarcan diferentes aspectos de la geodesia y topografía, como el cálculo
+      de coordenadas, la determinación de distancias y ángulos, la nivelación de
+      terrenos, entre muchas otras.
+    </p>
+    <p>
+      Una de las características destacadas de nuestra página es la posibilidad
+      de cargar datos en diferentes formatos, como archivos de texto, CSV, Esto
+      brinda una gran flexibilidad a los usuarios a la hora de trabajar con sus
+      propios datos y les permite aprovechar al máximo nuestras aplicaciones.
+      Además, nuestras herramientas están respaldadas por algoritmos avanzados y
+      métodos geodésicos de vanguardia, lo que garantiza resultados precisos y
+      confiables en cada cálculo realizado. Estamos comprometidos con la calidad
+      y la precisión, y nos esforzamos por mantenernos actualizados con las
+      últimas tendencias y avances en geodesia y topografía. Nuestro objetivo es
+      proporcionar una solución integral para las necesidades de los
+      profesionales de la geodesia y topografía, así como para estudiantes y
+      entusiastas que buscan aprender y aplicar estos conocimientos en sus
+      proyectos. Ya sea que necesites realizar mediciones topográficas para un
+      proyecto de construcción, trazar líneas de límites precisas o realizar
+      cálculos geodésicos complejos, nuestra página ofrece las herramientas
+      adecuadas para ayudarte a lograr tus objetivos. Explora nuestra página y
+      descubre la amplia gama de aplicaciones disponibles. Ya seas un experto en
+      geodesia o un principiante en el campo, estamos aquí para respaldarte en
+      tus esfuerzos y brindarte las herramientas necesarias para tener éxito en
+      tus proyectos de geodesia y topografía.
+    </p>
+  </div>
 </div>
 {% endblock %}
-

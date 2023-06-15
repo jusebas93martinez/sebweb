@@ -3,60 +3,62 @@
   <head>
     <title>TOPTOP</title>
     <style>
-      /* Estilos CSS para el menú */
-      .menu {
-        background-color: #f2f2f2;
-        padding: 10px;
-        text-align: center;
-      }
-      .container {
-      max-width: 900px; /* Ancho máximo del contenedor */
-      }
-      .menu ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-      }
-      .menu ul li {
-        margin-right: 10px;
-      }
-      .menu ul li a {
-        color: #333;
-        text-decoration: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        background-color: #ddd;
-        transition: background-color 0.3s ease;
-      }
-      .menu ul li a:hover {
-        background-color: #aaa;
-        color: #fff;
-      }
+            /* Estilos CSS para el menú */
+            .menu {
+              background-color: #002240; /* Azul oscuro */
+              padding: 10px;
+              text-align: center;
+            }
+            .menu ul {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+              display: flex;
+              justify-content: center;
+            }
+            .menu ul li {
+              margin-right: 10px;
+            }
+            .menu ul li a {
+              color: #fff; /* Texto en blanco */
+              text-decoration: none;
+              padding: 5px 10px;
+              border-radius: 5px;
+              background-color: #004c80; /* Azul claro */
+              transition: background-color 0.3s ease;
+            }
+            .menu ul li a:hover {
+              background-color: #002d4c; /* Azul más oscuro al pasar el cursor */
+            }
 
-      /* Estilos CSS para el pie de página */
       .content {
-        min-height: calc(
-          100vh - 120px
-        ); /* Restar la altura del menú y el pie de página */
-        padding-bottom: 50px; /* Altura del pie de página */
-      }
-      .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #f2f2f2;
-        padding: 10px;
+        width: 900px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        font-size: 12px;
-        color: #666;
-      }
+        margin: 0 auto; /
+            }
+
+            .content > * {
+              margin-bottom: 20px; /* Espacio entre elementos */
+            }
+            .footer {
+              position: fixed;
+              left: 0;
+              bottom: 0;
+              width: 100%;
+              background-color: #002240; /* Azul oscuro */
+              padding: 10px;
+              text-align: center;
+              font-size: 12px;
+              color: #fff; /* Texto en blanco */
+            }
     </style>
     {% block estilos %}{% endblock %}
   </head>
-  <body style="font-family: Arial, sans-serif;">
+  <body>
     <div class="menu">
       <ul>
         <li><a href="/">Inicio</a></li>
@@ -68,7 +70,7 @@
     <div class="content">{% block contenido %}{% endblock %}</div>
 
     <div class="footer">
-      &copy; {{ year }} TOPTOP Todos los derechos reservados.
+      &copy; {{ year }} TOPTOP Todos los derechos reservados - SM.
     </div>
 
     {% block scripts %}{% endblock %}
