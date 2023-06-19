@@ -60,7 +60,7 @@ def procesar_archivos():
         diferencia_interna = abs(suma_angulos - suma_teorica_interna)
 
         # Comparar las diferencias y determinar si son ángulos internos o externos
-        if diferencia_externa < diferencia_interna:
+        if diferencia_externa > diferencia_interna:
             tipo_angulos = 'externos'
         else:
             tipo_angulos = 'internos'
@@ -68,14 +68,14 @@ def procesar_archivos():
         return tipo_angulos
 
     tipo_angulos = determinar_tipo_angulos(pol_data)
-    if tipo_angulos == 'internso':
+    if tipo_angulos == 'internos':
         error_total = suma_teorica_externa - suma_angulos
     else:
         error_total = suma_teorica_interna -suma_angulos 
 
     suma_teorica = determinar_tipo_angulos(pol_data)
 
-    if tipo_angulos == 'internso':
+    if tipo_angulos == 'Internos':
         suma_teorica = suma_teorica_externa
     else:
         suma_teorica = suma_teorica_interna
@@ -99,7 +99,6 @@ def procesar_archivos():
         grados, minutos, segundos = convertir_a_grados_minutos_segundos(angulo_hc)
         angulo_ok = f"{grados}° {minutos}' {segundos}\""
         pol_data.at[index, 'anguloh_corr'] = angulo_ok
-
 
     # CALCULO DE AZIMUTS
 
@@ -151,12 +150,14 @@ def procesar_archivos():
     else:
         pol_data.loc[1, 'angulo_horizontal'] += azimut
 
+    print(azimut1)
+
     suma_total = 0
     resultados = []
     iniciar_suma = False
 
     for i in range(len(pol_data['angulo_horizontal'])):
-        angulo_actual = pol_data['angulo_horizontal'][i]
+        angulo_actual = pol_data['angulo_horizontal'].iloc[i]
         
         if angulo_actual != 0:
             if angulo_actual == azimut1:  # Si el valor actual es igual a azimut1, se mantiene sin cambios
@@ -187,6 +188,8 @@ def procesar_archivos():
 
     suma_dish = pol_data['dis_h'].sum()
 
+    print( pol_data['az'])
+
     # Convierte los ángulos a radianes y calcula el producto con 'dis_h'
     pol_data['proy_y'] = pol_data['dis_h'] * pol_data['azimuts'].apply(lambda x: math.cos(math.radians(x)))
 
@@ -214,7 +217,6 @@ def procesar_archivos():
     CorrY = error_norte /  suma_totaly
     CorrX = error_este / suma_totalx
 
-    print(CorrY)
 
     # Coordenadas de partida
     baseY = bases_data['norte'][0]
@@ -260,12 +262,11 @@ def procesar_archivos():
     pol_data['Corr_H'] = (pol_data['Dis_inc'] * pol_data['angulo_vertical'].apply(lambda x: math.cos(math.radians(x)))) - pol_data['baston'] + pol_data['alt_isn']
 
     suma_erroh = pol_data.iloc[:-1]['Corr_H'].sum()
- 
     cota1 = bases_data['altura'].iloc[0] + suma_erroh
-    print(cota1)
+
 
     error_cota =  bases_data['altura'].iloc[1] - cota1
-    print(error_cota)
+
 
     CorrZ = error_cota / suma_erroh
 
@@ -288,12 +289,28 @@ def procesar_archivos():
         cota_actual += proyeccion_cot
         ccota.append(cota_actual)
 
-    pol_data['cota'] = ccota
+    pol_data['altura'] = ccota
+
+    pol_data['id'] = pol_data['visado']
+
+    # Obtener las columnas requeridas de bases_data
+    bases_subset = bases_data[['id', 'norte', 'este', 'altura']]
+
+    # Obtener las columnas requeridas de pol_data
+    pol_subset = pol_data[['id', 'norte', 'este', 'altura']]
+
+    # Concatenar los subconjuntos en un nuevo DataFrame
+    df_nuevo = pd.concat([bases_subset[::-1], pol_subset[:-1]], ignore_index=True)
+
+    df_nuevo  = df_nuevo.dropna()
+    df_nuevo = df_nuevo.reset_index(drop=True)
 
     resultados = pol_data.to_dict(orient='records')
     coor_arran = bases_data.to_dict(orient='records')
+    coordenadas = df_nuevo.to_dict(orient='records')
 
     datos = {
+        'coordenadas':coordenadas,
         'arranque': coor_arran,
         'resultados': resultados,
         'tipo_angulos': tipo_angulos,
@@ -308,6 +325,8 @@ def procesar_archivos():
         'error_norte': suma_totaly1,
         'error_este': suma_totalx1,
         'Punto': visado,  
+  
     }
+    
     return datos
 
