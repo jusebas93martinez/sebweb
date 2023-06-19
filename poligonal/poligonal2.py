@@ -186,8 +186,6 @@ def pol_cerrada2():
     grados, minutos, segundos = convertir_a_grados_minutos_segundos(error_az)
     error_az = f"{grados}° {minutos}' {segundos}\""
 
-
-
     #----------------------------
 
     primer_azimut = pol_data['angulo_horizontal'].iloc[0]
@@ -321,15 +319,40 @@ def pol_cerrada2():
         cota_actual += proyeccion_cot
         ccota.append(cota_actual)
 
-    pol_data['cota'] = ccota
+    pol_data['altura'] = ccota
 
-    print(pol_data['cota'])
-    
     resultados = pol_data.to_dict(orient='records')
     coor_arran = bases_data.to_dict(orient='records')
 
+    pol_data['id'] =pol_data['visado']
+
+    # Obtener las columnas requeridas de bases_data
+    bases_subset = bases_data[['id', 'norte', 'este', 'altura']]
+
+    # Obtener las columnas requeridas de pol_data
+    pol_subset = pol_data[['id', 'norte', 'este', 'altura']]
+
+    # Obtener los dos primeros valores de bases_data
+    bases_primeros = bases_subset.head(2)
+    bases_ultimos = bases_subset.tail(2)
+
+    # Concatenar los subconjuntos en un nuevo DataFrame
+    df_nuevo = pd.concat([bases_primeros[::-1], pol_subset[:-1], bases_ultimos ], ignore_index=True)
+
+    df_nuevo  = df_nuevo.dropna()
+    df_nuevo = df_nuevo.drop_duplicates(subset='id')
+
+    df_nuevo = df_nuevo.reset_index(drop=True)
+
+    print(df_nuevo)
+
+    resultados = pol_data.to_dict(orient='records')
+    coor_arran = bases_data.to_dict(orient='records')
+    coordenadas = df_nuevo.to_dict(orient='records')
+
 
     datos = {
+    'coordenadas':coordenadas,
     'errorn': error_norte,
     'errore': error_este,
     'arranque': coor_arran,
