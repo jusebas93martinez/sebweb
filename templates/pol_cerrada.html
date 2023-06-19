@@ -209,12 +209,12 @@
           </tr>
         </thead>
         <tbody>
-          {% for resultado in resultados %}
+          {% for coordenadas in coordenadas %}
           <tr>
-            <td>{{ resultado.visado }}</td>
-            <td>{{ resultado.norte|floatformat:3 }}</td>
-            <td>{{ resultado.este|floatformat:3 }}</td>
-            <td>{{ resultado.cota|floatformat:3 }}</td>
+            <td>{{ coordenadas.id }}</td>
+            <td>{{ coordenadas.norte|floatformat:3 }}</td>
+            <td>{{ coordenadas.este|floatformat:3 }}</td>
+            <td>{{ coordenadas.altura|floatformat:3 }}</td>
 
             <!-- Muestra más columnas si es necesario -->
           </tr>

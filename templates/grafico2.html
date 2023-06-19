@@ -28,6 +28,10 @@
   <body>
     <h1>Gráfica generada</h1>
     <img src="{{ img_url }}" alt="Gráfica" />
+    <br />
+    <a href="{{ request.META.HTTP_REFERER }}">Retroceder</a>
+    <br />
+    <p>Creado por el Ing. Sebastian Martinez</p>
   </body>
 </html>
 {% endblock %}
