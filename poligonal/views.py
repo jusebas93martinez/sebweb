@@ -161,7 +161,7 @@ def generar_grafico2(datos):
 
     ax.set_xlabel('Este')
     ax.set_ylabel('Norte')
-    ax.set_title('Poligonal Cerrada con doble punto de apoyo')
+    ax.set_title('Poligonal Abierta con doble punto de apoyo')
     ax.grid(True)
 
     ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
