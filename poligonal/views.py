@@ -22,6 +22,8 @@ import matplotlib.ticker as ticker
 
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from .utils import procesar_archivos
+from .utils import Visit
+
 
 '''def error_404(request, exception):
     return render(request, '404.html', status=404)'''
@@ -30,7 +32,14 @@ def index(request):
     return render(request, 'base.html')
 
 def inicio(request):
-    return render(request, 'inicio.html')
+        # Obtener el objeto de contador de visitas existente o crear uno nuevo si no existe
+    visit, created = Visit.objects.get_or_create(pk=1)
+    
+    # Incrementar el contador de visitas
+    visit.count += 1
+    visit.save()
+
+    return render(request, 'inicio.html', {'visit': visit})
 
 def acercade(request):
     return render(request, 'acercade.html')
