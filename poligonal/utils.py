@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import math
 import os
+from django.db import models
 from django.conf import settings
 
 def procesar_archivos():
@@ -330,3 +331,5 @@ def procesar_archivos():
     
     return datos
 
+class Visit(models.Model):
+    count = models.PositiveIntegerField(default=0)
