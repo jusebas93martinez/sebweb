@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'sebweb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-'''DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sebweb1',
@@ -109,17 +109,17 @@ WSGI_APPLICATION = 'sebweb.wsgi.application'
         'HOST': 'localhost',
         'PORT': '5432',
     }
-}'''
+}
 
-import dj_database_url
 
+'''import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL'))
 }
+'''
 
-
-
+''
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

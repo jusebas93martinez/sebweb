@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render
 import pandas as pd
 import random
 import numpy as np
@@ -14,6 +13,10 @@ from django.core.files.storage import default_storage
 import matplotlib
 from .poligonal2 import pol_cerrada2
 from .poligonal3 import pol_cerrada3
+from django.http import JsonResponse
+from .cal_ondulacion import obtener_ondulacion
+
+
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
@@ -291,3 +294,21 @@ def procesar_archivos_pol_cerrada_ex(request):
 
         return render(request, 'grafico3.html', datos)
 
+from django.shortcuts import redirect
+
+def calcular_ondulacion(request):
+    if request.method == 'POST':
+        # Obtener coordenadas y calcular ondulación
+        lat = float(request.POST.get('lat'))
+        lng = float(request.POST.get('lng'))
+        resultado = obtener_ondulacion(lat, lng)
+
+        # Devolver el resultado como una respuesta JSON
+        return JsonResponse({'ondulacion': resultado})
+
+    return render(request, 'mapa.html')
+
+
+def mostrar_ond(request):
+    ondulacion = request.GET.get('ondulacion')
+    return render(request, 'mostrar_ond.html', {'ondulacion': ondulacion})

@@ -20,6 +20,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
+
+
 '''handler404 = error_404'''
 '''handler404 = 'poligonal.views.error_404'''
 
@@ -39,6 +42,8 @@ urlpatterns = [
     path('acercade/', views.acercade, name='acercade'),
     path('contacto/', views.contacto, name='contacto'),
     path('', views.inicio, name='inicio'),
+    path('mostrar_ond/', views.mostrar_ond, name='mostrar_ond'),
+    path('calcular_ondulacion/', views.calcular_ondulacion, name='calcular_ondulacion'),
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

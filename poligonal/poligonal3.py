@@ -6,7 +6,6 @@ import django
 from django.conf import settings
 from django.shortcuts import render
 
-
 def pol_cerrada3():
     
 

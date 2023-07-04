@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block estilos %}
+<style>
+  /* Estilos adicionales específicos para la página de inicio */
+  h1 {
+    color: blue;
+  }
+  #map-container {
+    width: 1700px;
+    height: 1000px;
+    position: relative;
+  }
+  #map {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  #map-info {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+  #coordinates {
+    margin-bottom: 10px;
+  }
+  #resultado {
+    font-weight: bold;
+  }
+</style>
+{% endblock %} {% block contenido %}
+<h1>Ondulación Geoidal Geocol2004</h1>
+<div id="map-container">
+  <div id="map"></div>
+  <div id="map-info">
+    <div id="coordinates"></div>
+    <div id="resultado"></div>
+  </div>
+</div>
+
+<form id="myForm">{% csrf_token %}</form>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"
+/>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  function initMap() {
+    var map = L.map("map").setView([4.5709, -74.2973], 10);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors",
+    }).addTo(map);
+
+    function calcularOndulacion(lat, lng) {
+      var csrftoken = jQuery("#myForm input[name=csrfmiddlewaretoken]").val();
+
+      $.ajax({
+        url: "/calcular_ondulacion/",
+        method: "POST",
+        headers: { "X-CSRFToken": csrftoken },
+        data: { lat: lat, lng: lng },
+        success: function (response) {
+          mostrarOndulacion(response.ondulacion);
+        },
+        error: function (xhr, status, error) {
+          console.log(error);
+        },
+      });
+    }
+
+    function mostrarOndulacion(ondulacion) {
+      var ondulacionFormateada = parseFloat(ondulacion).toFixed(3);
+      document.getElementById("resultado").innerHTML =
+        "Ondulación Geoidal: " + ondulacionFormateada;
+    }
+
+    map.on("click", function (event) {
+      var lat = event.latlng.lat;
+      var lng = event.latlng.lng;
+
+      document.getElementById("coordinates").innerHTML =
+        "Latitud: " + lat + ", Longitud: " + lng;
+
+      calcularOndulacion(lat, lng);
+    });
+  }
+
+  initMap();
+</script>
+{% endblock %}
