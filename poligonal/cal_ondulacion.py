@@ -16,6 +16,7 @@ def obtener_ondulacion(lat, lng):
     resolucion = 0.03333333333333333
 
     # Cálculo de los índices de los puntos más cercanos
+    
     fila = int((latitud_superior_izquierda - lat) / resolucion)
     columna = int((lng - longitud_superior_izquierda) / resolucion)
 
@@ -24,14 +25,15 @@ def obtener_ondulacion(lat, lng):
     lat2 = lat1 - resolucion
     lon2 = lon1 + resolucion
 
-    val1 = gecol.iloc[fila, columna]
-    val2 = gecol.iloc[fila, columna + 1]
-    val3 = gecol.iloc[fila + 1, columna]
-    val4 = gecol.iloc[fila + 1, columna + 1]
+    val1 = gecol.iloc[fila - 1, columna]
+    val2 = gecol.iloc[fila - 1, columna + 1]
+    val3 = gecol.iloc[fila , columna]
+    val4 = gecol.iloc[fila , columna + 1]
 
     interp_lat = ((lat - lat1) / (lat2 - lat1)) * (val3 - val1) + val1
     interp_lat2 = ((lat - lat1) / (lat2 - lat1)) * (val4 - val2) + val2
     interp_lon = ((lng - lon1) / (lon2 - lon1)) * (interp_lat2 - interp_lat) + interp_lat
+
 
     return interp_lon
 

@@ -21,8 +21,6 @@ from django.conf.urls.static import static
 
 
 
-
-
 '''handler404 = error_404'''
 '''handler404 = 'poligonal.views.error_404'''
 

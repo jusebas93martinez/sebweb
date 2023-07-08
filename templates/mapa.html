@@ -2,46 +2,166 @@
 <style>
   /* Estilos adicionales específicos para la página de inicio */
   h1 {
-    color: blue;
+    color: #337ab7;
+    font-size: 24px;
+    margin-bottom: 20px;
   }
+
   #map-container {
-    width: 1700px;
-    height: 1000px;
+    width: 100%;
+    height: 450px;
     position: relative;
   }
+
   #map {
     width: 100%;
     height: 100%;
     z-index: 1;
   }
+
   #map-info {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
   }
+
   #coordinates {
     margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
   }
+
   #resultado {
     font-weight: bold;
+    font-size: 18px;
+    color: #337ab7;
+    margin-top: 10px;
+  }
+
+  #myForm {
+    margin-top: 20px;
+  }
+
+  #myForm h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+
+  #myForm label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  #myForm input[type="number"] {
+    width: 60px;
+    margin-right: 5px;
+    padding: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  #irBtn,
+  #borrarBtn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #337ab7;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #irBtn:hover,
+  #borrarBtn:hover {
+    background-color: #286090;
   }
 </style>
 {% endblock %} {% block contenido %}
 <h1>Ondulación Geoidal Geocol2004</h1>
+
 <div id="map-container">
   <div id="map"></div>
   <div id="map-info">
     <div id="coordinates"></div>
     <div id="resultado"></div>
+    <div id="myForm">
+      <h3>Ingrese coordenadas</h3>
+      <form>
+        {% csrf_token %}
+        <label for="lat_grados">Latitud:</label>
+        <div>
+          <input
+            type="number"
+            id="lat_grados"
+            name="lat_grados"
+            placeholder="Grados"
+            min="-90"
+            max="90"
+          />
+          <input
+            type="number"
+            id="lat_minutos"
+            name="lat_minutos"
+            placeholder="Minutos"
+            min="0"
+            max="59"
+          />
+          <input
+            type="number"
+            id="lat_segundos"
+            name="lat_segundos"
+            placeholder="Segundos"
+            min="0"
+            max="59"
+            step="0.01"
+          />
+        </div>
+
+        <label for="lng_grados">Longitud:</label>
+        <div>
+          <input
+            type="number"
+            id="lng_grados"
+            name="lng_grados"
+            placeholder="Grados"
+            min="-180"
+            max="180"
+          />
+          <input
+            type="number"
+            id="lng_minutos"
+            name="lng_minutos"
+            placeholder="Minutos"
+            min="0"
+            max="59"
+          />
+          <input
+            type="number"
+            id="lng_segundos"
+            name="lng_segundos"
+            placeholder="Segundos"
+            min="0"
+            max="59"
+            step="0.01"
+          />
+        </div>
+
+        <button type="button" id="irBtn">Ir</button>
+        <button type="button" id="borrarBtn">Borrar Marcas</button>
+      </form>
+    </div>
   </div>
 </div>
-
-<form id="myForm">{% csrf_token %}</form>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
 <link
@@ -52,8 +172,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+  var marker;
+
   function initMap() {
     var map = L.map("map").setView([4.5709, -74.2973], 10);
+
+    var markerLayer = L.layerGroup().addTo(map);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap contributors",
@@ -62,18 +186,77 @@
     function calcularOndulacion(lat, lng) {
       var csrftoken = jQuery("#myForm input[name=csrfmiddlewaretoken]").val();
 
+      var lat_grados = parseInt(document.getElementById("lat_grados").value);
+      var lat_minutos = parseInt(document.getElementById("lat_minutos").value);
+      var lat_segundos = parseFloat(
+        document.getElementById("lat_segundos").value
+      );
+      var lng_grados = parseInt(document.getElementById("lng_grados").value);
+      var lng_minutos = parseInt(document.getElementById("lng_minutos").value);
+      var lng_segundos = parseFloat(
+        document.getElementById("lng_segundos").value
+      );
+
+      var lat_decimal = lat_grados + lat_minutos / 60 + lat_segundos / 3600;
+      var lng_decimal = lng_grados + lng_minutos / 60 + lng_segundos / 3600;
+
       $.ajax({
         url: "/calcular_ondulacion/",
         method: "POST",
         headers: { "X-CSRFToken": csrftoken },
-        data: { lat: lat, lng: lng },
+        data: {
+          lat: lat,
+          lng: lng,
+          lat_decimal: lat_decimal,
+          lng_decimal: lng_decimal,
+        },
         success: function (response) {
+          // Mostrar la ondulación geoidal
           mostrarOndulacion(response.ondulacion);
+
+          // Hacer zoom y mostrar el punto en el mapa
+          map.flyTo([lat, lng], 15); // Zoom al punto con un nivel de zoom de 15
+          L.marker([lat, lng]).addTo(markerLayer); // Agregar un marcador en la capa de marcadores
         },
         error: function (xhr, status, error) {
           console.log(error);
         },
       });
+    }
+
+    function irALocalizacion() {
+      var lat_grados = parseInt(document.getElementById("lat_grados").value);
+      var lat_minutos = parseInt(document.getElementById("lat_minutos").value);
+      var lat_segundos = parseFloat(
+        document.getElementById("lat_segundos").value
+      );
+      var lng_grados = parseInt(document.getElementById("lng_grados").value);
+      var lng_minutos = parseInt(document.getElementById("lng_minutos").value);
+      var lng_segundos = parseFloat(
+        document.getElementById("lng_segundos").value
+      );
+
+      var lat = lat_grados + lat_minutos / 60 + lat_segundos / 3600;
+      var lng = (lng_grados + lng_minutos / 60 + lng_segundos / 3600) * -1;
+
+      document.getElementById("coordinates").innerHTML =
+        "Latitud: " + lat.toFixed(6) + ", Longitud: " + lng.toFixed(6);
+
+      map.flyTo([lat, lng], 15); // Zoom al punto con un nivel de zoom de 15
+
+      // Remover el marcador existente, si lo hay
+      if (marker) {
+        markerLayer.removeLayer(marker);
+      }
+      // Agregar un nuevo marcador en la ubicación seleccionada a la capa de marcadores
+      marker = L.marker([lat, lng]).addTo(markerLayer);
+
+      calcularOndulacion(lat, lng); // Calcular la ondulación geoidal
+    }
+
+    function borrarMarcas() {
+      // Remover todos los marcadores de la capa de marcadores
+      markerLayer.clearLayers();
     }
 
     function mostrarOndulacion(ondulacion) {
@@ -82,12 +265,17 @@
         "Ondulación Geoidal: " + ondulacionFormateada;
     }
 
+    document.getElementById("irBtn").addEventListener("click", irALocalizacion);
+    document
+      .getElementById("borrarBtn")
+      .addEventListener("click", borrarMarcas);
+
     map.on("click", function (event) {
       var lat = event.latlng.lat;
       var lng = event.latlng.lng;
 
       document.getElementById("coordinates").innerHTML =
-        "Latitud: " + lat + ", Longitud: " + lng;
+        "Latitud: " + lat.toFixed(6) + ", Longitud: " + lng.toFixed(6);
 
       calcularOndulacion(lat, lng);
     });
