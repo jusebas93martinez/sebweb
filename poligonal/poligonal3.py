@@ -294,9 +294,7 @@ def pol_cerrada3():
 
     cota1 = baseZ + suma_erroh
 
-
     error_cota =  bases_data['altura'][0] - cota1
-
 
     CorrZ = error_cota / suma_erroh
 
@@ -323,6 +321,9 @@ def pol_cerrada3():
     resultados = pol_data.to_dict(orient='records')
     coor_arran = bases_data.to_dict(orient='records')
 
+    pol_data['ida'] = pol_data['id']
+    pol_data['vis'] = pol_data['visado']
+
     pol_data['id'] =pol_data['visado']
 
     # Obtener las columnas requeridas de bases_data
@@ -336,8 +337,6 @@ def pol_cerrada3():
 
     df_nuevo  = df_nuevo.dropna()
     df_nuevo = df_nuevo.reset_index(drop=True)
-
-
 
     resultados = pol_data.to_dict(orient='records')
     coor_arran = bases_data.to_dict(orient='records')

@@ -151,7 +151,6 @@ def procesar_archivos():
     else:
         pol_data.loc[1, 'angulo_horizontal'] += azimut
 
-    print(azimut1)
 
     suma_total = 0
     resultados = []
@@ -188,8 +187,6 @@ def procesar_archivos():
               pol_data.at[index, 'az'] = azz   
 
     suma_dish = pol_data['dis_h'].sum()
-
-    print( pol_data['az'])
 
     # Convierte los ángulos a radianes y calcula el producto con 'dis_h'
     pol_data['proy_y'] = pol_data['dis_h'] * pol_data['azimuts'].apply(lambda x: math.cos(math.radians(x)))
@@ -292,7 +289,10 @@ def procesar_archivos():
 
     pol_data['altura'] = ccota
 
+    pol_data['ida'] = pol_data['id']
+    pol_data['vis'] = pol_data['visado']
     pol_data['id'] = pol_data['visado']
+
 
     # Obtener las columnas requeridas de bases_data
     bases_subset = bases_data[['id', 'norte', 'este', 'altura']]
@@ -309,6 +309,8 @@ def procesar_archivos():
     resultados = pol_data.to_dict(orient='records')
     coor_arran = bases_data.to_dict(orient='records')
     coordenadas = df_nuevo.to_dict(orient='records')
+
+    print(['id'])
 
     datos = {
         'coordenadas':coordenadas,

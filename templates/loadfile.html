@@ -10,6 +10,9 @@
 <html>
   <head>
     <title>Poligonal</title>
+    {% load static %}
+    <!-- Agregado aquí -->
+
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -34,10 +37,38 @@
         background-color: #f2f2f2;
         font-weight: bold;
       }
+      .instructions {
+        margin-bottom: 20px;
+      }
+      .instructions ul {
+        list-style-type: disc;
+        margin-left: 20px;
+      }
     </style>
   </head>
   <body>
     <h1>Cargar Archivos CSV</h1>
+
+    <div class="instructions">
+      <h2>Instrucciones:</h2>
+      <ul>
+        <li>
+          Seleccione el archivo CSV de la poligonal haciendo clic en el botón
+          "Archivo Poligonal, tienes que llamarlo por nombre "pol.csv" en el
+          formato tal cual con los titulos igual que el ejemplo para que
+          funcione, y los angulos en formato decimal".
+        </li>
+        <li>
+          Seleccione el archivo CSV de las bases haciendo clic en el botón
+          "Archivo bases".
+        </li>
+        <li>
+          Haga clic en el botón "Procesar" para comenzar el procesamiento de los
+          archivos.
+        </li>
+      </ul>
+      <img src="{% static 'pol1.png' %}" alt="Imagen de ejemplo" width="600" />
+    </div>
 
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}

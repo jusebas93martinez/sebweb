@@ -324,6 +324,8 @@ def pol_cerrada2():
     resultados = pol_data.to_dict(orient='records')
     coor_arran = bases_data.to_dict(orient='records')
 
+    pol_data['ida'] = pol_data['id']
+    pol_data['vis'] = pol_data['visado']
     pol_data['id'] =pol_data['visado']
 
     # Obtener las columnas requeridas de bases_data
@@ -344,7 +346,7 @@ def pol_cerrada2():
 
     df_nuevo = df_nuevo.reset_index(drop=True)
 
-    print(df_nuevo)
+  
 
     resultados = pol_data.to_dict(orient='records')
     coor_arran = bases_data.to_dict(orient='records')

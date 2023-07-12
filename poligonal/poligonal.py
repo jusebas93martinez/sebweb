@@ -220,8 +220,11 @@ for index, row in pol_data.iterrows():
 
 pol_data['Cota'] = cota
 
+
+print(pol_data['id'])
+print(pol_data['visado'])
+
 for index, row in pol_data.iterrows():
     norte = row['Norte']
     este = row['Este']
     cota = row['Cota']
-   
