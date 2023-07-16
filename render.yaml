@@ -1,4 +1,0 @@
-# render.yaml
-
-buildCommand: cd path/to/your/app && echo "Dependencies are already installed"
-startCommand: cd path/to/your/app && source sbs/bin/activate && gunicorn sebweb.wsgi:application
