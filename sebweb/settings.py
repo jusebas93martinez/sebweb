@@ -73,16 +73,8 @@ TEMPLATES = [
 ]
 
 
-
-# Obtener la URL de la base de datos desde la variable de entorno
-database_url = os.getenv('DATABASE_URL')
-
-# Convertir la URL de la base de datos en un diccionario de configuración
-db_config = dj_database_url.parse(database_url)
-
-# Configurar la base de datos predeterminada
 DATABASES = {
-    'default': db_config
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
 
 WSGI_APPLICATION = 'sebweb.wsgi.application'
