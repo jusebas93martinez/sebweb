@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-84gd+*k%7y-5yahw&4v_z!hid9q#a44$e8(!3y=+^u7wu1iarl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -72,12 +72,11 @@ TEMPLATES = [
     },
 ]
 
+WSGI_APPLICATION = 'sebweb.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
-
-WSGI_APPLICATION = 'sebweb.wsgi.application'
 
 '''# Configuración de la base de datos
 DATABASES = {
