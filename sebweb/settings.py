@@ -1,6 +1,9 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
+
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -74,6 +77,10 @@ TEMPLATES = [
 
 
 
+# Obtener la URL de la base de datos desde la variable de entorno
+database_url = os.getenv('DATABASE_URL')
+
+# Configuración de la base de datos
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -85,7 +92,7 @@ DATABASES = {
     }
 }
 
-''
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
