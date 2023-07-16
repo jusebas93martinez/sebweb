@@ -7,8 +7,9 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'sebweb/static'),
 ]
 
 DATABASE_URL = 'postgresql://postgres:SQxDcVjJNVN2e0ISUZ4f@containers-us-west-93.railway.app:6001/railway'
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-84gd+*k%7y-5yahw&4v_z!hid9q#a44$e8(!3y=+^u7wu1iarl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sebdattop.up.railway.app']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
