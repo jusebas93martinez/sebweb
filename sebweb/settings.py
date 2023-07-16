@@ -11,6 +11,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+DATABASE_URL = 'postgresql://postgres:SQxDcVjJNVN2e0ISUZ4f@containers-us-west-93.railway.app:6001/railway'
+
 # Configuración de archivos de medios
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -75,10 +77,18 @@ TEMPLATES = [
 # Obtener la URL de la base de datos desde la variable de entorno
 database_url = os.getenv('DATABASE_URL')
 
+# Convertir la URL de la base de datos en un diccionario de configuración
+db_config = dj_database_url.parse(database_url)
+
+# Configurar la base de datos predeterminada
+DATABASES = {
+    'default': db_config
+}
+
 
 WSGI_APPLICATION = 'sebweb.wsgi.application'
 
-# Configuración de la base de datos
+'''# Configuración de la base de datos
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -88,7 +98,7 @@ DATABASES = {
         'HOST': 'containers-us-west-93.railway.app',
         'PORT': '6001',
     }
-}
+}'''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
