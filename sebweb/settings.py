@@ -3,9 +3,6 @@ import os
 from dotenv import load_dotenv
 import dj_database_url
 
-
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,8 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -78,6 +75,9 @@ TEMPLATES = [
 # Obtener la URL de la base de datos desde la variable de entorno
 database_url = os.getenv('DATABASE_URL')
 
+
+WSGI_APPLICATION = 'sebweb.wsgi.application'
+
 # Configuración de la base de datos
 DATABASES = {
     'default': {
@@ -89,8 +89,6 @@ DATABASES = {
         'PORT': '6001',
     }
 }
-
-WSGI_APPLICATION = 'sebweb.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
