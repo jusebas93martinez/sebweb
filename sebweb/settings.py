@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+WSGI_APPLICATION = 'sebweb.wsgi.application'
 
 
 STATIC_URL = '/static/'
@@ -72,7 +73,6 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'sebweb.wsgi.application'
 
 DATABASES = {
     'default': {
