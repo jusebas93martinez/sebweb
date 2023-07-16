@@ -1,14 +1,6 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from decouple import config
-
-
-
-load_dotenv('.env')  # Ruta correcta al archivo .env
-
-
-# Resto del código...
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,9 +21,7 @@ MEDIA_URL = '/media/'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
-print(SECRET_KEY)  # Verificar el valor de SECRET_KEY
-
+SECRET_KEY = 'django-insecure-84gd+*k%7y-5yahw&4v_z!hid9q#a44$e8(!3y=+^u7wu1iarl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,24 +77,16 @@ WSGI_APPLICATION = 'sebweb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-'''DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config("DATABASE_NAME"),
-        'USER': config("DATABASE_USER"),
-        'PASSWORD': config("DATABASE_PASSWORD"),
-        'HOST': config("DATABASE_HOST"),
-        'PORT': config("DATABASE_PORT"),
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'SQxDcVjJNVN2e0ISUZ4f',
+        'HOST': 'containers-us-west-93.railway.app',
+        'PORT': '6001',
     }
-}'''
-
-
-import dj_database_url
-
-DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
-
 
 ''
 # Password validation
