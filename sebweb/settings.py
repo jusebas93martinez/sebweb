@@ -85,7 +85,6 @@ DATABASES = {
     'default': db_config
 }
 
-
 WSGI_APPLICATION = 'sebweb.wsgi.application'
 
 '''# Configuración de la base de datos
