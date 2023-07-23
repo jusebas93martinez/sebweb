@@ -312,3 +312,80 @@ def calcular_ondulacion(request):
 def mostrar_ond(request):
     ondulacion = request.GET.get('ondulacion')
     return render(request, 'mostrar_ond.html', {'ondulacion': ondulacion})
+
+
+def calcular_azimut(request):
+    if request.method == 'POST':
+        norte1 = float(request.POST.get('norte1'))
+        este1 = float(request.POST.get('este1'))
+        norte2 = float(request.POST.get('norte2'))
+        este2 = float(request.POST.get('este2'))
+
+        dx = este2 - este1
+        dy = norte2 - norte1
+
+        print(dx, dy)
+
+        rumbo_rad = math.atan(dx / dy)
+        rumbo_deg = abs(rumbo_rad * 180 / math.pi)
+
+
+        def validar_rumbo(dy, dx):
+            if dy > 0 and dx > 0:
+                return "Nor-Este"
+            elif dy < 0 and dx < 0:
+                return "Sur-Oeste"
+            elif dy < 0 and dx > 0:
+                return "Sur-Este"
+            elif dy > 0 and dx < 0:
+                return "Nor-Oeste"
+            else:
+                return "Rumbo inválido"
+        direccion = validar_rumbo(dy,dx)
+        def calcular_azimut(rumbo_deg):
+                direccion = validar_rumbo(dy,dx)
+
+                if direccion == "Nor-Este":
+                    azimut = rumbo_deg
+                elif direccion == "Sur-Este":
+                    azimut = 180 - rumbo_deg
+                elif direccion == "Sur-Oeste":
+                    azimut = rumbo_deg + 180
+                elif direccion == "Nor-Oeste":
+                    azimut = 360 - rumbo_deg
+                else:
+                    azimut = None
+                return azimut
+      
+        azimut = calcular_azimut(rumbo_deg)   
+
+        azimut_grados = int(azimut)
+        azimut_minutos = int((azimut - azimut_grados) * 60)
+        azimut_segundos = (azimut - azimut_grados - azimut_minutos / 60) * 3600
+
+
+        rumbo_grados = int(rumbo_deg)
+        rumbo_minutos = int(((rumbo_deg) - rumbo_grados) * 60)
+        rumbo_segundos = (rumbo_deg - rumbo_grados - rumbo_minutos/60) * 3600
+
+        cuadrante = direccion
+
+        distancia = math.sqrt(dx ** 2 + dy ** 2)
+
+        punto1 = {'norte': norte1, 'este': este1}
+        punto2 = {'norte': norte2, 'este': este2}
+
+        return render(request, 'formulario_azimut.html', {
+            'azimut_grados': azimut_grados,
+            'azimut_minutos': azimut_minutos,
+            'azimut_segundos': azimut_segundos,
+            'rumbo_grados': rumbo_grados,
+            'rumbo_minutos': rumbo_minutos,
+            'rumbo_segundos': rumbo_segundos,
+            'cuadrante': cuadrante,
+            'distancia': distancia,
+            'punto1': punto1,
+            'punto2': punto2,
+        })
+
+    return render(request, 'formulario_azimut.html')

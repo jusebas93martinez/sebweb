@@ -1,0 +1,137 @@
+{% extends 'base.html' %} {% block contenido %}
+<style>
+  /* Estilos adicionales específicos para la página de inicio */
+  h1 {
+    color: black;
+  }
+
+  .center-table {
+    max-width: 800px; /* Ajusta el valor según tus necesidades */
+    margin: 0 auto; /* Centra la tabla en la página */
+    table-layout: auto; /* Ajusta el tamaño de las columnas automáticamente */
+  }
+  .center-table th,
+  .center-table td {
+    text-align: center; /* Centra el contenido de las celdas */
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+
+  tr:hover {
+    background-color: #eaeaea;
+  }
+</style>
+<h1>Calcular Azimut y Distancia</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <label for="norte1">Punto 1 - Norte:</label>
+  <input type="number" step="0.001" name="norte1" id="norte1" /><br /><br />
+
+  <label for="este1">Punto 1 - Este:</label>
+  <input type="number" step="0.001" name="este1" id="este1" /><br /><br />
+
+  <label for="norte2">Punto 2 - Norte:</label>
+  <input type="number" step="0.001" name="norte2" id="norte2" /><br /><br />
+
+  <label for="este2">Punto 2 - Este:</label>
+  <input type="number" step="0.001" name="este2" id="este2" /><br /><br />
+
+  <input type="submit" value="Calcular Azimut y Distancia" />
+</form>
+
+<script>
+  // JavaScript para mostrar el resultado cuando se envíe el formulario
+  const resultadoDiv = document.getElementById('resultado');
+  {% if azimut is not None %}
+    resultadoDiv.style.display = 'block';
+  {% endif %}
+</script>
+{% if azimut_grados is not None and distancia is not None %}
+<h2>Resultados</h2>
+<div class="center-table">
+  <!-- Aquí va la primera tabla -->
+  <table>
+    <tr>
+      <th>Punto</th>
+      <th>Norte</th>
+      <th>Este</th>
+    </tr>
+    <tr>
+      <td>Punto 1</td>
+      <td>{{ punto1.norte }}</td>
+      <td>{{ punto1.este }}</td>
+    </tr>
+    <tr>
+      <td>Punto 2</td>
+      <td>{{ punto2.norte }}</td>
+      <td>{{ punto2.este }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="center-table">
+  <!-- Aquí va la segunda tabla -->
+  <table>
+    <tr>
+      <th>Azimut</th>
+      <td>
+        {{ azimut_grados }}° {{ azimut_minutos }}'
+        {{azimut_segundos|floatformat:3}}''
+      </td>
+    </tr>
+    <tr>
+      <th>Rumbo</th>
+      <td>
+        {{ rumbo_grados }}° {{ rumbo_minutos }}'
+        {{rumbo_segundos|floatformat:3}}''
+      </td>
+    </tr>
+    <tr>
+      <th>Distancia</th>
+      <td>{{ distancia|floatformat:4 }}</td>
+    </tr>
+    <tr>
+      <th>Cuadrante</th>
+      <td>{{ cuadrante }}</td>
+    </tr>
+  </table>
+</div>
+
+{% else %}
+<p>No se pudo calcular el azimut debido a un rumbo inválido.</p>
+{% endif %}{% endblock %}

@@ -1,90 +1,43 @@
-{% extends 'base.html' %} {% block estilos %}
-<style>
-  /* Estilos adicionales específicos para la página de inicio */
-  h1 {
-    color: blue;
-  }
-</style>
-{% endblock %} {% block contenido %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Poligonal</title>
-    {% load static %}
-    <!-- Agregado aquí -->
+{% extends 'base.html' %} {% block contenido %}
 
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 20px;
-      }
-      h1 {
-        color: #333;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-      th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-      }
-      .instructions {
-        margin-bottom: 20px;
-      }
-      .instructions ul {
-        list-style-type: disc;
-        margin-left: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Cargar Archivos CSV</h1>
+<h1>POLIGONAL CERRADA BRAZO EXTERNO</h1>
 
-    <div class="instructions">
-      <h2>Instrucciones:</h2>
-      <ul>
-        <li>
-          Seleccione el archivo CSV de la poligonal haciendo clic en el botón
-          "Archivo Poligonal, tienes que llamarlo por nombre "pol.csv" en el
-          formato tal cual con los titulos igual que el ejemplo para que
-          funcione, y los angulos en formato decimal".
-        </li>
-        <li>
-          Seleccione el archivo CSV de las bases haciendo clic en el botón
-          "Archivo bases".
-        </li>
-        <li>
-          Haga clic en el botón "Procesar" para comenzar el procesamiento de los
-          archivos.
-        </li>
-      </ul>
-      <img
-        src="{% static 'images/pol1.png' %}"
-        alt="Imagen 1"
-        style="width: 600px; height: 300px"
-      />
-    </div>
+<div class="instructions">
+  <h2>Instrucciones:</h2>
+  <ul>
+    <li>
+      Seleccione el archivo CSV de la poligonal haciendo clic en el botón
+      "Archivo Poligonal, tienes que llamarlo por nombre "pol.csv" en el formato
+      tal cual con los titulos igual que el ejemplo para que funcione, y los
+      angulos en formato decimal".
+    </li>
+    <li>
+      Seleccione el archivo CSV de las bases haciendo clic en el botón "Archivo
+      bases".
+    </li>
+    <li>
+      Haga clic en el botón "Procesar" para comenzar el procesamiento de los
+      archivos.
+    </li>
+  </ul>
+</div>
 
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <label for="pol_file">Archivo Poligonal:</label>
-      <input type="file" name="pol_file" id="pol_file" /><br /><br />
+<a
+  href="https://drive.google.com/drive/folders/16LEft-ra7IMuErtwWxEvYApiXnH82JoZ?usp=sharing"
+  target="_blank"
+  class="btn-url"
+  >PLANTILLAS DE EJEMPLO</a
+>
 
-      <label for="bases_file">Archivo bases:</label>
-      <input type="file" name="bases_file" id="bases_file" /><br /><br />
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label for="pol_file">Archivo Poligonal:</label>
+  <input type="file" name="pol_file" id="pol_file" /><br /><br />
 
-      <input type="submit" value="Procesar" />
-    </form>
-  </body>
-</html>
+  <label for="bases_file">Archivo bases:</label>
+  <input type="file" name="bases_file" id="bases_file" /><br /><br />
+
+  <input type="submit" value="Procesar" />
+</form>
 
 {% endblock %}

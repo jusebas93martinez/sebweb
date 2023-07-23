@@ -1,15 +1,4 @@
-{% extends 'base.html' %} {% block estilos %}
-<style>
-  /* Estilos adicionales específicos para la página de inicio */
-  h1 {
-    color: blue;
-  }
-</style>
-{% endblock %} {% block contenido %}
-<div class="contenedor-principal">
-  <!DOCTYPE html>
-  <html>
-    <head>
+{% extends 'base.html' %} {% block contenido %}
       <title>Resultados</title>
       <style>
         /* Estilos adicionales específicos para la página de inicio */
@@ -37,11 +26,6 @@
         .tabla-resultados1 th,
         .tabla-resultados1 td {
           text-align: center; /* Centra el contenido de las celdas */
-        }
-        body {
-          font-family: Arial, sans-serif;
-          margin: 20px;
-          font-size: 14px;
         }
 
         h1 {
@@ -90,23 +74,46 @@
       </style>
     </head>
     <body>
-      <h1>Resultados</h1>
+<h1>Resultados</h1>
+<table>
+  <tr>
+    <td><strong>Precision:</strong></td>
+    <td>1:{{ precision|floatformat:0}}</td>
+  </tr>
+  <tr>
+    <td><strong>Tipos de Angulos:</strong></td>
+    <td>{{ tipo_angulos }}</td>
+  </tr>
+  <tr>
+    <td><strong>Suma teorica:</strong></td>
+    <td>{{ suma_teorica }}</td>
+  </tr>
+  <tr>
+    <td><strong>Suma Angular:</strong></td>
+    <td>{{ suma_angular }}</td>
+  </tr>
+  <tr>
+    <td><strong>Error Cierre Angular:</strong></td>
+    <td>{{ error_cierre }}</td>
+  </tr>
+  <tr>
+    <td><strong>Número de Vertices:</strong></td>
+    <td>{{ num_vertices }}</td>
+  </tr>
+  <tr>
+    <td><strong>Distancia Poligonal:</strong></td>
+    <td>{{ dist_pol }} metros</td>
+  </tr>
+  <tr>
+    <td><strong>Error Proyecciones Norte:</strong></td>
+    <td>{{error_norte|floatformat:3}} metros</td>
+  </tr>
+  <tr>
+    <td><strong>Error Proyecciones Este:</strong></td>
+    <td>{{ error_este|floatformat:3 }} metros</td>
+  </tr>
+</table>
 
-      <p><strong>Precision:</strong> 1:{{ precision|floatformat:0}}</p>
-      <p><strong>Tipos de Angulos:</strong> {{ tipo_angulos }}</p>
-      <p><strong>Suma teorica:</strong> {{ suma_teorica }}</p>
-      <p><strong>Suma Angular:</strong> {{ suma_angular }}</p>
-      <p><strong>Error Cierre Angular:</strong> {{ error_cierre }}</p>
-      <p><strong>Número de Vertices:</strong> {{ num_vertices }}</p>
-      <p><strong>Distancia Poligonal:</strong> {{ dist_pol }} metros</p>
-      <p>
-        <strong>Error Proyecciones Norte:</strong> {{error_norte|floatformat:3}}
-        metros
-      </p>
-      <p>
-        <strong>Error Proyecciones Este:</strong> {{ error_este|floatformat:3 }}
-        metros
-      </p>
 
       <h2>Coordenadas de Arranque</h2>
 
@@ -227,7 +234,5 @@
           <button type="submit">Ver gráfica</button>
         </form>
       </div>
-    </body>
-  </html>
-</div>
+
 {% endblock %}

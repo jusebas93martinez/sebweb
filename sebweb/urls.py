@@ -42,7 +42,8 @@ urlpatterns = [
     path('', views.inicio, name='inicio'),
     path('mostrar_ond/', views.mostrar_ond, name='mostrar_ond'),
     path('calcular_ondulacion/', views.calcular_ondulacion, name='calcular_ondulacion'),
-
+    path('calcular_azimut_post/', views.calcular_azimut, name='calcular_azimut_post'),
+    
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

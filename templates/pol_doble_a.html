@@ -1,246 +1,246 @@
-{% extends 'base.html' %} {% block estilos %}
+{% extends 'base.html' %} {% block contenido %}
+<title>Resultados</title>
 <style>
   /* Estilos adicionales específicos para la página de inicio */
   h1 {
-    color: blue;
+    color: black;
+  }
+  .contenedor-principal {
+    max-width: 900px; /* Ajusta el ancho máximo según tus necesidades */
+    margin: 0 auto; /* Centra el contenedor en la página */
+  }
+  .tabla-resultados {
+    max-width: 900px; /* Ajusta el valor según tus necesidades */
+    margin: 0 auto; /* Centra la tabla en la página */
+    table-layout: auto; /* Ajusta el tamaño de las columnas automáticamente */
+  }
+  .tabla-resultados th,
+  .tabla-resultados td {
+    text-align: center; /* Centra el contenido de las celdas */
+    padding-left: 1px; /* Ajusta el valor según tus necesidades */
+    padding-right: 1px; /* Ajusta el valor según tus necesidades */
+  }
+  .tabla-resultados tbody tr {
+    line-height: 1.1; /* Ajusta el valor según tus necesidades */
+  }
+  .tabla-resultados1 {
+    max-width: 600px; /* Ajusta el valor según tus necesidades */
+    margin: 0 auto; /* Centra la tabla en la página */
+    table-layout: auto; /* Ajusta el tamaño de las columnas automáticamente */
+  }
+  .tabla-resultados1 th,
+  .tabla-resultados1 td {
+    text-align: center; /* Centra el contenido de las celdas */
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+
+  tr:hover {
+    background-color: #eaeaea;
+  }
+  .center-image {
+    display: flex;
+    justify-content: center;
   }
 </style>
-{% endblock %} {% block contenido %}
-<div class="contenedor-principal">
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Resultados</title>
-      <style>
-        /* Estilos adicionales específicos para la página de inicio */
-        h1 {
-          color: black;
-        }
-        .contenedor-principal {
-          max-width: 900px; /* Ajusta el ancho máximo según tus necesidades */
-          margin: 0 auto; /* Centra el contenedor en la página */
-        }
-        .tabla-resultados {
-          max-width: 900px; /* Ajusta el valor según tus necesidades */
-          margin: 0 auto; /* Centra la tabla en la página */
-          table-layout: auto; /* Ajusta el tamaño de las columnas automáticamente */
-        }
-        .tabla-resultados th,
-        .tabla-resultados td {
-          text-align: center; /* Centra el contenido de las celdas */
-          padding-left: 1px; /* Ajusta el valor según tus necesidades */
-          padding-right: 1px; /* Ajusta el valor según tus necesidades */
-        }
-        .tabla-resultados tbody tr {
-          line-height: 1.1; /* Ajusta el valor según tus necesidades */
-        }
-        .tabla-resultados1 {
-          max-width: 600px; /* Ajusta el valor según tus necesidades */
-          margin: 0 auto; /* Centra la tabla en la página */
-          table-layout: auto; /* Ajusta el tamaño de las columnas automáticamente */
-        }
-        .tabla-resultados1 th,
-        .tabla-resultados1 td {
-          text-align: center; /* Centra el contenido de las celdas */
-        }
-        body {
-          font-family: Arial, sans-serif;
-          margin: 20px;
-          font-size: 14px;
-        }
 
-        h1 {
-          margin-bottom: 20px;
-        }
+<h1>Resultados</h1>
+<table>
+  <tr>
+    <td><strong>Precision:</strong></td>
+    <td>1:{{ precision|floatformat:0}}</td>
+  </tr>
+  <tr>
+    <td><strong>Azimut de llegada Teorico:</strong></td>
+    <td>{{ azimut1 }}</td>
+  </tr>
+  <tr>
+    <td><strong>Azimut de llegada Obtenido:</strong></td>
+    <td>{{ azimut2 }}</td>
+  </tr>
+  <tr>
+    <td><strong>Error de llegada Angular:</strong></td>
+    <td>{{ err_az }}</td>
+  </tr>
+  <tr>
+    <td><strong>Número de Vertices:</strong></td>
+    <td>{{ num_vertices }}</td>
+  </tr>
+  <tr>
+    <td><strong>Distancia Poligonal:</strong></td>
+    <td>{{ dist_pol }} metros</td>
+  </tr>
+  <tr>
+    <td><strong>Error Proyecciones Norte:</strong></td>
+    <td>{{ errorn|floatformat:3 }} metros</td>
+  </tr>
+  <tr>
+    <td><strong>Error Proyecciones Este:</strong></td>
+    <td>{{ errore|floatformat:3 }} metros</td>
+  </tr>
+</table>
 
-        h2 {
-          margin-top: 40px;
-          margin-bottom: 10px;
-        }
+<h2>Coordenadas de Arranque</h2>
 
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          font-size: 12px;
-        }
+<table class="tabla-resultados1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Norte</th>
+      <th>Este</th>
+      <th>Cota</th>
 
-        th,
-        td {
-          padding: 8px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
-        }
+      <!-- Agrega más columnas si es necesario -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for arranque in arranque %}
+    <tr>
+      <td>{{ arranque.id }}</td>
+      <td>{{ arranque.norte|floatformat:3 }}</td>
+      <td>{{ arranque.este|floatformat:3 }}</td>
+      <td>{{ arranque.altura|floatformat:3 }}</td>
 
-        th {
-          background-color: #f2f2f2;
-          font-weight: bold;
-        }
+      <!-- Muestra más columnas si es necesario -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
-        p {
-          margin-top: 5px;
-          margin-bottom: 5px;
-        }
+<h2>Datos de entrada</h2>
 
-        tr:nth-child(even) {
-          background-color: #f5f5f5;
-        }
+<table class="tabla-resultados">
+  <thead>
+    <tr>
+      <th>Armada</th>
+      <th>Visado</th>
+      <th>Altura Instrumental</th>
+      <th>Altura Prisma</th>
+      <th>Angulo Horizontal</th>
+      <th>Angulo Vertical</th>
+      <th>Distancia Horizontal</th>
+      <th>Distancia Inclinada</th>
 
-        tr:hover {
-          background-color: #eaeaea;
-        }
-        .center-image {
-          display: flex;
-          justify-content: center;
-        }
-      </style>
-    </head>
-    <body>
-      <h1>Resultados</h1>
+      <!-- Agrega más columnas si es necesario -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for resultado in resultados %}
+    <tr>
+      <td>{{ resultado.ida }}</td>
+      <td>{{ resultado.vis }}</td>
+      <td>{{ resultado.alt_isn }}</td>
+      <td>{{ resultado.baston }}</td>
+      <td>{{ resultado.angulos_horizontales_iniciales }}</td>
+      <td>{{ resultado.angulos_vertical_iniciales }}</td>
+      <td>{{ resultado.dis_h|floatformat:3 }}</td>
+      <td>{{ resultado.Dis_inc|floatformat:3 }}</td>
 
-      <p><strong>Precision:</strong> 1:{{ precision|floatformat:0}}</p>
-      <p><strong>Azimut de llegada Teorico:</strong> {{ azimut1 }}</p>
-      <p><strong>Azimut de llegada Obtenido:</strong> {{ azimut2 }}</p>
-      <p><strong>Error de llegada Angular:</strong> {{ err_az }}</p>
-      <p><strong>Número de Vertices:</strong> {{ num_vertices }}</p>
-      <p><strong>Distancia Poligonal:</strong> {{ dist_pol }} metros</p>
-      <p>
-        <strong>Error Proyecciones Norte:</strong> {{errorn|floatformat:3}}
-        metros
-      </p>
-      <p>
-        <strong>Error Proyecciones Este:</strong> {{ errore|floatformat:3 }}
-        metros
-      </p>
+      <!-- Muestra más columnas si es necesario -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h2>Resultados de la Poligonal</h2>
+<table class="tabla-resultados">
+  <thead>
+    <tr>
+      <th>Armada</th>
+      <th>Visado</th>
+      <th>Azimuts Iniciales</th>
+      <th>Azimuts Corregidos</th>
+      <th>Correción Norte</th>
+      <th>Correción Este</th>
+      <th>Proyección Norte</th>
+      <th>Proyección Este</th>
+      <th>Correción Altura</th>
+      <th>Proyección Cota</th>
 
-      <h2>Coordenadas de Arranque</h2>
+      <!-- Agrega más columnas si es necesario -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for resultado in resultados %}
+    <tr>
+      <td>{{ resultado.ida }}</td>
+      <td>{{ resultado.vis }}</td>
+      <td>{{ resultado.az_init }}</td>
+      <td>{{ resultado.az_corr }}</td>
+      <td>{{ resultado.correcionY|floatformat:3 }}</td>
+      <td>{{ resultado.correcionX|floatformat:3 }}</td>
+      <td>{{ resultado.proy_y|floatformat:3 }}</td>
+      <td>{{ resultado.proy_x|floatformat:3 }}</td>
+      <td>{{ resultado.correcionZ|floatformat:3 }}</td>
+      <td>{{ resultado.Dist_v|floatformat:3 }}</td>
 
-      <table class="tabla-resultados1">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Norte</th>
-            <th>Este</th>
-            <th>Cota</th>
+      <!-- Muestra más columnas si es necesario -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h2>Coordenadas Ajustadas</h2>
+<table class="tabla-resultados1">
+  <thead>
+    <tr>
+      <th>Punto</th>
+      <th>Norte</th>
+      <th>Este</th>
+      <th>Cota</th>
 
-            <!-- Agrega más columnas si es necesario -->
-          </tr>
-        </thead>
-        <tbody>
-          {% for arranque in arranque %}
-          <tr>
-            <td>{{ arranque.id }}</td>
-            <td>{{ arranque.norte|floatformat:3 }}</td>
-            <td>{{ arranque.este|floatformat:3 }}</td>
-            <td>{{ arranque.altura|floatformat:3 }}</td>
-
-            <!-- Muestra más columnas si es necesario -->
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-
-      <h2>Datos de entrada</h2>
-
-      <table class="tabla-resultados">
-        <thead>
-          <tr>
-            <th>Armada</th>
-            <th>Visado</th>
-            <th>Altura Instrumental</th>
-            <th>Altura Prisma</th>
-            <th>Angulo Horizontal</th>
-            <th>Angulo Vertical</th>
-            <th>Distancia Horizontal</th>
-            <th>Distancia Inclinada</th>
-
-            <!-- Agrega más columnas si es necesario -->
-          </tr>
-        </thead>
-        <tbody>
-          {% for resultado in resultados %}
-          <tr>
-            <td>{{ resultado.ida }}</td>
-            <td>{{ resultado.vis }}</td>
-            <td>{{ resultado.alt_isn }}</td>
-            <td>{{ resultado.baston }}</td>
-            <td>{{ resultado.angulos_horizontales_iniciales }}</td>
-            <td>{{ resultado.angulos_vertical_iniciales }}</td>
-            <td>{{ resultado.dis_h|floatformat:3 }}</td>
-            <td>{{ resultado.Dis_inc|floatformat:3 }}</td>
-
-            <!-- Muestra más columnas si es necesario -->
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <h2>Resultados de la Poligonal</h2>
-      <table class="tabla-resultados">
-        <thead>
-          <tr>
-            <th>Armada</th>
-            <th>Visado</th>
-            <th>Azimuts Iniciales</th>
-            <th>Azimuts Corregidos</th>
-            <th>Correción Norte</th>
-            <th>Correción Este</th>
-            <th>Proyección Norte</th>
-            <th>Proyección Este</th>
-            <th>Correción Altura</th>
-            <th>Proyección Cota</th>
-
-            <!-- Agrega más columnas si es necesario -->
-          </tr>
-        </thead>
-        <tbody>
-          {% for resultado in resultados %}
-          <tr>
-            <td>{{ resultado.ida }}</td>
-            <td>{{ resultado.vis }}</td>
-            <td>{{ resultado.az_init }}</td>
-            <td>{{ resultado.az_corr }}</td>
-            <td>{{ resultado.correcionY|floatformat:3 }}</td>
-            <td>{{ resultado.correcionX|floatformat:3 }}</td>
-            <td>{{ resultado.proy_y|floatformat:3 }}</td>
-            <td>{{ resultado.proy_x|floatformat:3 }}</td>
-            <td>{{ resultado.correcionZ|floatformat:3 }}</td>
-            <td>{{ resultado.Dist_v|floatformat:3 }}</td>
-
-            <!-- Muestra más columnas si es necesario -->
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <h2>Coordenadas Ajustadas</h2>
-      <table class="tabla-resultados1">
-        <thead>
-          <tr>
-            <th>Punto</th>
-            <th>Norte</th>
-            <th>Este</th>
-            <th>Cota</th>
-
-            <!-- Agrega más columnas si es necesario -->
-          </tr>
-        </thead>
-        <tbody>
-          {% for coordenadas in coordenadas %}
-          <tr>
-            <td>{{ coordenadas.id }}</td>
-            <td>{{ coordenadas.norte|floatformat:3 }}</td>
-            <td>{{ coordenadas.este|floatformat:3 }}</td>
-            <td>{{ coordenadas.altura|floatformat:3 }}</td>
-            <!-- Muestra más columnas si es necesario -->
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <h2>Gráfica de Poiligonal</h2>
-      <div class="center-image">
-        <form action="{% url 'grafica2' %}" method="get">
-          <button type="submit">Ver gráfica</button>
-        </form>
-      </div>
-    </body>
-  </html>
+      <!-- Agrega más columnas si es necesario -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for coordenadas in coordenadas %}
+    <tr>
+      <td>{{ coordenadas.id }}</td>
+      <td>{{ coordenadas.norte|floatformat:3 }}</td>
+      <td>{{ coordenadas.este|floatformat:3 }}</td>
+      <td>{{ coordenadas.altura|floatformat:3 }}</td>
+      <!-- Muestra más columnas si es necesario -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h2>Gráfica de Poiligonal</h2>
+<div class="center-image">
+  <form action="{% url 'grafica2' %}" method="get">
+    <button type="submit">Ver gráfica</button>
+  </form>
 </div>
+
 {% endblock %}
