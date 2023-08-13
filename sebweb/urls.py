@@ -40,10 +40,9 @@ urlpatterns = [
     path('acercade/', views.acercade, name='acercade'),
     path('contacto/', views.contacto, name='contacto'),
     path('', views.inicio, name='inicio'),
-    path('mostrar_ond/', views.mostrar_ond, name='mostrar_ond'),
-    path('calcular_ondulacion/', views.calcular_ondulacion, name='calcular_ondulacion'),
+    path('calcular_ondulacion_y_velocidades/', views.calcular_ondulacion_y_velocidades, name='calcular_ondulacion_y_velocidades'),
     path('calcular_azimut_post/', views.calcular_azimut, name='calcular_azimut_post'),
-    
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

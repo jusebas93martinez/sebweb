@@ -15,6 +15,7 @@ from .poligonal2 import pol_cerrada2
 from .poligonal3 import pol_cerrada3
 from django.http import JsonResponse
 from .cal_ondulacion import obtener_ondulacion
+from .calvel import calcular_velocidades
 
 
 matplotlib.use('Agg')
@@ -296,22 +297,26 @@ def procesar_archivos_pol_cerrada_ex(request):
 
 from django.shortcuts import redirect
 
-def calcular_ondulacion(request):
+
+
+def calcular_ondulacion_y_velocidades(request):
     if request.method == 'POST':
-        # Obtener coordenadas y calcular ondulación
         lat = float(request.POST.get('lat'))
         lng = float(request.POST.get('lng'))
-        resultado = obtener_ondulacion(lat, lng)
+        
+        # Calcular la ondulación geoidal
+        ondulacion = obtener_ondulacion(lat, lng)
+        
+        # Calcular las velocidades
+        vel_x, vel_y, vel_z = calcular_velocidades(lat, lng)
 
-        # Devolver el resultado como una respuesta JSON
-        return JsonResponse({'ondulacion': resultado})
-
+        return JsonResponse({
+            'ondulacion': ondulacion,
+            'vel_x': vel_x,
+            'vel_y': vel_y,
+            'vel_z': vel_z
+        })
     return render(request, 'mapa.html')
-
-
-def mostrar_ond(request):
-    ondulacion = request.GET.get('ondulacion')
-    return render(request, 'mostrar_ond.html', {'ondulacion': ondulacion})
 
 
 def calcular_azimut(request):
@@ -389,3 +394,4 @@ def calcular_azimut(request):
         })
 
     return render(request, 'formulario_azimut.html')
+
